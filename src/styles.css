@@ -39,8 +39,10 @@
 
 .primary-value{
     line-height: 15px;
-    font-size: 80pt !important;
+    font-size: 80pt;
+    font-weight: bold;
     text-shadow: -2px -2px 2px rgb(32, 32, 32), 2px 2px 2px rgb(92, 92, 92);
+    
 }
 
 .drawer-button{

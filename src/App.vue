@@ -1,4 +1,5 @@
 <template>
+<title>a</title>
 <div class="homepage">
   <SplitterGroup direction="vertical">
     <SplitterPanel class="card-splitter">

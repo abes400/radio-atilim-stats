@@ -4,7 +4,7 @@
 
     <div class="card-content" v-if="stat">
         
-        <h1 class="primary-value">{{stat.currentlisteners}}</h1>
+        <div class="primary-value">{{stat.currentlisteners}}</div>
         
 
         <div class="drawer">
