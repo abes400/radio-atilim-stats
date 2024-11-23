@@ -1,0 +1,99 @@
+<template>
+<div class="card"> 
+    <div class="card-title" v-if="stat"><strong>Now Playing: {{stat.songtitle}}</strong></div>
+
+    <div class="card-content" v-if="stat">
+        
+        <h1 class="primary-value">{{stat.currentlisteners}}</h1>
+        
+
+        <div class="drawer">
+            <button class="drawer-button pin-bottom" @click="this.details = !this.details">...</button>
+            <div class="drawer-content" v-show="this.details">
+                <table>
+                    <tr>
+                        <td><strong>Peak Listeners:</strong></td>
+                        <td>{{stat.peaklisteners}}</td>
+                        <td><strong>Max Listeners:</strong></td>
+                        <td>{{stat.maxlisteners}}</td> 
+                           
+                    </tr>
+                    <tr>
+                        <td><strong>Unique Listeners:</strong></td>
+                        <td>{{stat.uniquelisteners}}</td>
+                        <td><strong>Avg. Time:</strong></td>
+                        <td>{{stat.averagetime}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="card-content" v-else>
+        Please wait...
+        
+    </div>
+    
+    
+</div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            details: false,
+        }
+    },
+
+    props: {
+        stat: Object,
+    },
+
+    /*
+    TODO: uniquelisteners
+    TODO: peaklisteners
+    TODO: maxlisteners
+    TODO: averagetime
+
+    TODO: songtitle
+    */
+
+}
+</script>
+
+<style>
+.card{
+    width: 100%;
+    height: 100%;
+}
+
+.primary-value{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.card-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.pin-bottom{
+    margin-top: auto;
+}
+
+.drawer-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 50px;
+    font-size: 10pt;
+}
+
+</style>
