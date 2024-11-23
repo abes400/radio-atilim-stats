@@ -15,7 +15,7 @@
     </SplitterPanel>
     <SplitterResizeHandle/>
     <SplitterPanel class="card-splitter">
-
+      <SavedLogs/>
     </SplitterPanel>
   </SplitterGroup>
 
@@ -29,12 +29,14 @@
 <script>
 import CurrentStat from './components/CurrentStat.vue'
 import StatTimeline from './components/StatTimeline.vue'
+import SavedLogs from './components/SavedLogs.vue'
 import {SplitterGroup, SplitterPanel, SplitterResizeHandle} from 'radix-vue';
 export default {
   name: 'app',
   components: {
     CurrentStat,
     StatTimeline,
+    SavedLogs,
 
     SplitterGroup,
     SplitterPanel,

@@ -43,7 +43,7 @@
 export default {
     data() {
         return {
-            details: false,
+            details: true,
         }
     },
 
