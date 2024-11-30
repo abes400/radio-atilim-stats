@@ -47,6 +47,7 @@ export default {
     return {
       currentStat: null,
       url: 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1',
+      //url: 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466',
       //updateInterval: 1000,
       //isListening: true
     }
@@ -66,7 +67,7 @@ export default {
       this.currentStat.date = date;
 
       
-    }, 3000) 
+    }, 5000) 
     
   },
 }
