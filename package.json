@@ -10,9 +10,11 @@
     "start": "electron ."
   },
   "dependencies": {
+    "chart.js": "^4.4.6",
     "core-js": "^3.8.3",
     "radix-vue": "^1.9.10",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vue-chartjs": "^5.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

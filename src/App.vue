@@ -1,5 +1,4 @@
 <template>
-<title>a</title>
 <div class="homepage">
   <SplitterGroup direction="vertical">
     <SplitterPanel class="card-splitter">
@@ -9,7 +8,7 @@
     </SplitterPanel>
     <SplitterResizeHandle/>
     <SplitterPanel class="card-splitter">
-      <StatTimeline/>
+      <StatTimeline :loggedStat="this.currentStat"/>
     </SplitterPanel>
   </SplitterGroup>
     </SplitterPanel>
@@ -59,7 +58,14 @@ export default {
     setInterval(async () => {
       const response = await fetch(this.url);
       this.currentStat = await(response.json())
-      console.log(this.currentStat)
+      
+      const timeInfo = new Date()
+      const time = `${timeInfo.getHours()}:${timeInfo.getMinutes()}:${timeInfo.getSeconds()}`
+      const date = `${timeInfo.getFullYear()}/${timeInfo.getMonth()}/${timeInfo.getDate()}`
+      this.currentStat.time = time;
+      this.currentStat.date = date;
+
+      
     }, 3000) 
     
   },
