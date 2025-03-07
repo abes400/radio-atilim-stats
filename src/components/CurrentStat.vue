@@ -84,10 +84,6 @@ export default {
     justify-content: center;
 }
 
-.pin-bottom{
-    margin-top: auto;
-}
-
 .drawer-content{
     display: flex;
     flex-direction: row;

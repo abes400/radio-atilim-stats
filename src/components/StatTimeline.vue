@@ -1,8 +1,10 @@
 <template>
   <div class="card">
-    <div class="card-title"><strong>Stat Timeline</strong></div>
+    <div class="card-title">
+        <strong>Stat Timeline</strong>
+        </div>
     <div class="card-content">
-        <Line :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+        <Line style="padding: 20px" :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
     </div>
 
   </div>
@@ -24,6 +26,8 @@ export default {
     data() {
         return {
             statCount: 0,
+            recordBeginDate: '',
+            recording: false,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -39,13 +43,14 @@ export default {
                     listenTimeAxis: {
                         beginAtZero: false,
                         position: 'right',
-                    }
+                    },
+                    
                 },
 
                 interaction: { mode: 'index' },
                 
                 plugins: {
-                    legend: {onClick: null}
+                    legend: { onClick: null, }
                 }
                 
             },
@@ -92,7 +97,7 @@ export default {
         loggedStat: Object,
         maxStatRecord: {
             type: Number,
-            default: 100,
+            default: 10,
         }
     },
 
@@ -108,9 +113,15 @@ export default {
         loggedStat: {
             handler(newStat) {
                 if(this.statCount === this.maxStatRecord) {
-                    
+                    console.log(this.data.labels[0], this.recordBeginDate)
                     this.clearChart()
-                    
+                    this.recordBeginDate = newStat.date            
+                }
+
+                // FIX
+                else if(this.statCount === 0) {
+                    this.recordBeginDate = newStat.date     
+                    console.log(this.recordBeginDate)          
                 }
                 
                 this.data.labels.push(newStat.time)

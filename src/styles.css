@@ -1,13 +1,18 @@
 :root{
-    background-color: #282828;
+    background-color: #272727;
     color: #9a9a9a;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+button{
+    margin: 1px;
+    background-color: #6e6e6e;
+}
+
 .card{
-    background-color: #3f3f3f;
-    border-radius: 10px;
-    box-shadow: -3px -3px 3px rgb(92, 92, 92), 3px 3px 3px rgb(32, 32, 32);
+    background-color: #343434;
+    border-radius: 5px;
+    /*box-shadow: -3px -3px 3px rgb(92, 92, 92), 3px 3px 3px rgb(32, 32, 32);*/
 
     display: flex;
     flex-direction: column;
@@ -15,6 +20,31 @@
 
     position: relative;
 }
+
+.list-container {
+    background-color: #3f3f3f;
+    border-radius: 5px;
+    /*box-shadow: -3px -3px 3px rgb(92, 92, 92), 3px 3px 3px rgb(32, 32, 32);*/
+    overflow-y: auto;
+}
+
+.list-item {
+    border-bottom: solid 1px #9a9a9a;
+    padding: 15px;
+}
+
+.pin-bottom{
+    margin-top: auto;
+}
+.pin-left{
+    position: absolute;
+    left: 20px;
+}
+.pin-right{
+    position: absolute;
+    right: 20px;
+}
+
 
 .card-title{
     display: flex;
@@ -25,7 +55,7 @@
     height: 40px;
 
     border-bottom: solid 1px #282828;
-    text-shadow: -1px -1px 1px rgb(32, 32, 32), 1px 1px 1px rgb(92, 92, 92);
+    /*text-shadow: -1px -1px 1px rgb(32, 32, 32), 1px 1px 1px rgb(92, 92, 92);*/
 }
 
 .card-content{
@@ -41,7 +71,7 @@
     line-height: 15px;
     font-size: 80pt;
     font-weight: bold;
-    text-shadow: -2px -2px 2px rgb(32, 32, 32), 2px 2px 2px rgb(92, 92, 92);
+    /*text-shadow: -2px -2px 2px rgb(32, 32, 32), 2px 2px 2px rgb(92, 92, 92);*/
     
 }
 
