@@ -106,34 +106,30 @@ export default {
             this.data.labels.length = 0
             this.data.datasets.forEach((dataset) => {dataset.data.length = 0})
             this.statCount = 0
-        }
-    },
+        },
 
-    watch:{
-        loggedStat: {
-            handler(newStat) {
-                console.log(this.statCount)
-                if(this.statCount === this.maxStatRecord) {
-                    console.log(this.data.labels[0], this.recordBeginDate, "b")
-                    //Save data to file
-                    this.clearChart()
-                    this.recordBeginDate = newStat.date            
-                }
-
-                // FIX
-                else if(this.statCount === 0) {
-                    this.recordBeginDate = newStat.date     
-                    console.log(this.recordBeginDate, "a")          
-                }
-                
-                this.data.labels.push(newStat.time)
-                this.data.datasets[CURRENT_LISTENER].data = [...this.data.datasets[CURRENT_LISTENER].data, newStat.currentlisteners]
-                this.data.datasets[UNIQUE_LISTENERS].data = [...this.data.datasets[UNIQUE_LISTENERS].data, newStat.uniquelisteners]
-                this.data.datasets[AVERAGE_TIME].data = [...this.data.datasets[AVERAGE_TIME].data, newStat.averagetime]
-                this.renderTriggerKey = !this.renderTriggerKey
-                
-                this.statCount++;                
+        handleStat(newStat) {
+            console.log(this.statCount)
+            if(this.statCount === this.maxStatRecord) {
+                console.log(this.data.labels[0], this.recordBeginDate, "b")
+                //Save data to file
+                this.clearChart()
+                this.recordBeginDate = newStat.date            
             }
+
+            // FIX
+            else if(this.statCount === 0) {
+                this.recordBeginDate = newStat.date     
+                console.log(this.recordBeginDate, "a")          
+            }
+            
+            this.data.labels.push(newStat.time)
+            this.data.datasets[CURRENT_LISTENER].data = [...this.data.datasets[CURRENT_LISTENER].data, newStat.currentlisteners]
+            this.data.datasets[UNIQUE_LISTENERS].data = [...this.data.datasets[UNIQUE_LISTENERS].data, newStat.uniquelisteners]
+            this.data.datasets[AVERAGE_TIME].data = [...this.data.datasets[AVERAGE_TIME].data, newStat.averagetime]
+            this.renderTriggerKey = !this.renderTriggerKey
+            
+            this.statCount++;                
         }
     },
 

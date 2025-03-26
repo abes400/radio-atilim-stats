@@ -47,10 +47,6 @@ export default {
         }
     },
 
-    props: {
-        stat: Object,
-    },
-
     /*
     TODO: uniquelisteners
     TODO: peaklisteners

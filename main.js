@@ -6,7 +6,7 @@ const createWindow = () => {
         height: 600,
     });
 
-    window.loadURL("http://localhost:8080");
+    window.loadFile("dist/index.html");
     
 
     
