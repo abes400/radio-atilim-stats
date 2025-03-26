@@ -44,8 +44,11 @@ export default {
     data() {
         return {
             details: true,
-            stat: 1,
         }
+    },
+
+    props: {
+        stat: Object,
     },
 
     /*

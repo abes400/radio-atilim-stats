@@ -4,11 +4,11 @@
     <SplitterPanel class="card-splitter">
       <SplitterGroup direction="horizontal">
     <SplitterPanel class="card-splitter">
-      <CurrentStat/>
+      <CurrentStat :stat="this.currentStat"/>
     </SplitterPanel>
     <SplitterResizeHandle/>
     <SplitterPanel class="card-splitter">
-      <StatTimeline/>
+      <StatTimeline :loggedStat="this.currentStat"/>
     </SplitterPanel>
   </SplitterGroup>
     </SplitterPanel>
@@ -54,10 +54,10 @@ export default {
   },
 
   mounted(){
-    //this.fetchData()
+    this.fetchData()
     
     // fetch stats every 5 seconds
-    //setInterval(this.fetchData, 5000) 
+    setInterval(this.fetchData, 5000) 
     
   },
 

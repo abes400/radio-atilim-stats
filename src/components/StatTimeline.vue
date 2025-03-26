@@ -6,14 +6,13 @@
     <div class="card-content">
         <Line style="padding: 20px" :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
     </div>
+
   </div>
 </template>
 
 <script>
 import {Line} from 'vue-chartjs'
 import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend} from 'chart.js'
-import { ipcRenderer } from 'electron'
-
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend)
 
@@ -29,32 +28,32 @@ export default {
             statCount: 0,
             recordBeginDate: '',
             recording: false,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
 
-                animation: false,
+                    animation: false,
 
-                scales: {
-                    listenerCountAxis: {
-                        beginAtZero: false,
-                        position: 'left',
-                        ticks: { callback: (val) => {if(val % 1 === 0) return val;} }
+                    scales: {
+                        listenerCountAxis: {
+                            beginAtZero: false,
+                            position: 'left',
+                            ticks: { callback: (val) => {if(val % 1 === 0) return val;} }
+                        },
+                        listenTimeAxis: {
+                            beginAtZero: false,
+                            position: 'right',
+                        },
+                        
                     },
-                    listenTimeAxis: {
-                        beginAtZero: false,
-                        position: 'right',
-                    },
+
+                    interaction: { mode: 'index' },
+                    
+                    plugins: {
+                        legend: { onClick: null, }
+                    }
                     
                 },
-
-                interaction: { mode: 'index' },
-                
-                plugins: {
-                    legend: { onClick: null, }
-                }
-                
-            },
             data: {
                 labels: [],
                 datasets:[
@@ -94,10 +93,6 @@ export default {
         }
     },
 
-    mounted() {
-        //ipcRenderer.on('test');
-    },
-
     props: {
         loggedStat: Object,
         maxStatRecord: {
@@ -111,32 +106,34 @@ export default {
             this.data.labels.length = 0
             this.data.datasets.forEach((dataset) => {dataset.data.length = 0})
             this.statCount = 0
-        },
+        }
+    },
 
-        handleNewStat(newStat) {
-            
-            console.log(this.statCount)
-            if(this.statCount === this.maxStatRecord) {
-                console.log(this.data.labels[0], this.recordBeginDate, "b")
-                //Save data to file
-                this.clearChart()
-                this.recordBeginDate = newStat.date            
+    watch:{
+        loggedStat: {
+            handler(newStat) {
+                console.log(this.statCount)
+                if(this.statCount === this.maxStatRecord) {
+                    console.log(this.data.labels[0], this.recordBeginDate, "b")
+                    //Save data to file
+                    this.clearChart()
+                    this.recordBeginDate = newStat.date            
+                }
+
+                // FIX
+                else if(this.statCount === 0) {
+                    this.recordBeginDate = newStat.date     
+                    console.log(this.recordBeginDate, "a")          
+                }
+                
+                this.data.labels.push(newStat.time)
+                this.data.datasets[CURRENT_LISTENER].data = [...this.data.datasets[CURRENT_LISTENER].data, newStat.currentlisteners]
+                this.data.datasets[UNIQUE_LISTENERS].data = [...this.data.datasets[UNIQUE_LISTENERS].data, newStat.uniquelisteners]
+                this.data.datasets[AVERAGE_TIME].data = [...this.data.datasets[AVERAGE_TIME].data, newStat.averagetime]
+                this.renderTriggerKey = !this.renderTriggerKey
+                
+                this.statCount++;                
             }
-
-            // FIX
-            else if(this.statCount === 0) {
-                this.recordBeginDate = newStat.date     
-                console.log(this.recordBeginDate, "a")          
-            }
-            
-            this.data.labels.push(newStat.time)
-            this.data.datasets[CURRENT_LISTENER].data = [...this.data.datasets[CURRENT_LISTENER].data, newStat.currentlisteners]
-            this.data.datasets[UNIQUE_LISTENERS].data = [...this.data.datasets[UNIQUE_LISTENERS].data, newStat.uniquelisteners]
-            this.data.datasets[AVERAGE_TIME].data = [...this.data.datasets[AVERAGE_TIME].data, newStat.averagetime]
-            this.renderTriggerKey = !this.renderTriggerKey
-            
-            this.statCount++; 
-
         }
     },
 
