@@ -54,9 +54,15 @@ export default {
   },
 
   mounted(){
+    this.fetchData()
     
     // fetch stats every 5 seconds
-    setInterval(async () => {
+    setInterval(this.fetchData, 5000) 
+    
+  },
+
+  methods: {
+    async fetchData () {
       const response = await fetch(this.url);
       this.currentStat = await(response.json())
       
@@ -67,9 +73,8 @@ export default {
       this.currentStat.date = date;
 
       console.log(this.currentStat.songtitle);
-    }, 5000) 
-    
-  },
+    }
+  }
 }
 </script>
 

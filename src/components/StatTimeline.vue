@@ -28,32 +28,32 @@ export default {
             statCount: 0,
             recordBeginDate: '',
             recording: false,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
 
-                animation: false,
+                    animation: false,
 
-                scales: {
-                    listenerCountAxis: {
-                        beginAtZero: false,
-                        position: 'left',
-                        ticks: { callback: (val) => {if(val % 1 === 0) return val;} }
+                    scales: {
+                        listenerCountAxis: {
+                            beginAtZero: false,
+                            position: 'left',
+                            ticks: { callback: (val) => {if(val % 1 === 0) return val;} }
+                        },
+                        listenTimeAxis: {
+                            beginAtZero: false,
+                            position: 'right',
+                        },
+                        
                     },
-                    listenTimeAxis: {
-                        beginAtZero: false,
-                        position: 'right',
-                    },
+
+                    interaction: { mode: 'index' },
+                    
+                    plugins: {
+                        legend: { onClick: null, }
+                    }
                     
                 },
-
-                interaction: { mode: 'index' },
-                
-                plugins: {
-                    legend: { onClick: null, }
-                }
-                
-            },
             data: {
                 labels: [],
                 datasets:[
@@ -112,8 +112,10 @@ export default {
     watch:{
         loggedStat: {
             handler(newStat) {
+                console.log(this.statCount)
                 if(this.statCount === this.maxStatRecord) {
-                    console.log(this.data.labels[0], this.recordBeginDate)
+                    console.log(this.data.labels[0], this.recordBeginDate, "b")
+                    //Save data to file
                     this.clearChart()
                     this.recordBeginDate = newStat.date            
                 }
@@ -121,7 +123,7 @@ export default {
                 // FIX
                 else if(this.statCount === 0) {
                     this.recordBeginDate = newStat.date     
-                    console.log(this.recordBeginDate)          
+                    console.log(this.recordBeginDate, "a")          
                 }
                 
                 this.data.labels.push(newStat.time)
