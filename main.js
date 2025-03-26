@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron'); 
+const {app, BrowserWindow, ipcMain} = require('electron'); 
 
 const createWindow = () => {
     const window = new BrowserWindow({
@@ -6,7 +6,8 @@ const createWindow = () => {
         height: 600,
     });
 
-    window.loadURL("http://localhost:8080");
+    window.loadFile("dist/index.html");
+    window.webContents.send("a");
     
 
     
