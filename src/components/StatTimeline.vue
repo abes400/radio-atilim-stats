@@ -12,7 +12,7 @@
 <script>
 import {Line} from 'vue-chartjs'
 import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend} from 'chart.js'
-import { ipcRenderer } from 'electron'
+//import { ipcRenderer } from 'electron'
 
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend)
