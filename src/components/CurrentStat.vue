@@ -47,6 +47,12 @@ export default {
         }
     },
 
+    mounted() {
+        window.ipc.on('test', () => {
+            console.log("Ipc establishment successful!");
+        })
+    }
+
     /*
     TODO: uniquelisteners
     TODO: peaklisteners
