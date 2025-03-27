@@ -19,10 +19,6 @@
   </SplitterGroup>
 
 </div>
-  
-
-
-  
 </template>
 
 <script>
@@ -42,39 +38,6 @@ export default {
     SplitterResizeHandle
 
   },
-
-  data() {
-    return {
-      currentStat: null,
-      url: 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1',
-      //url: 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466',
-      //updateInterval: 1000,
-      //isListening: true
-    }
-  },
-
-  mounted(){
-    //this.fetchData()
-    
-    // fetch stats every 5 seconds
-    //setInterval(this.fetchData, 5000) 
-    
-  },
-
-  methods: {
-    async fetchData () {
-      const response = await fetch(this.url);
-      this.currentStat = await(response.json())
-      
-      const timeInfo = new Date()
-      const time = `${timeInfo.getHours()}:${timeInfo.getMinutes()}:${timeInfo.getSeconds()}`
-      const date = `${timeInfo.getFullYear()}/${timeInfo.getMonth() + 1}/${timeInfo.getDate()}`
-      this.currentStat.time = time;
-      this.currentStat.date = date;
-
-      console.log(this.currentStat.songtitle);
-    }
-  }
 }
 </script>
 

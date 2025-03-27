@@ -92,6 +92,11 @@ export default {
             renderTriggerKey: false,
         }
     },
+    mounted() {
+        window.ipc.on('new_stat', (new_stat) => {
+            this.handleStat(new_stat);
+        })
+    },
 
     props: {
         loggedStat: Object,

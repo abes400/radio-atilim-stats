@@ -44,12 +44,13 @@ export default {
     data() {
         return {
             details: true,
+            stat: null,
         }
     },
 
     mounted() {
-        window.ipc.on('test', () => {
-            console.log("Ipc establishment successful!");
+        window.ipc.on('new_stat', (new_stat) => {
+            this.stat = new_stat;
         })
     }
 
