@@ -11,7 +11,7 @@ let currentStat = null;
 //['new_stat', 'save_chart', 'open_chart', 'delete_chart'];
 
 ipcMain.on('save_chart', async (event, saveDataBuffer) => {
-    fs.writeFileSync('TEST.STAT', saveDataBuffer);
+    fs.writeFileSync('', saveDataBuffer);
 });
 
 const fetchData = async () => {
