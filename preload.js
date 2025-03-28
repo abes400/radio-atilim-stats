@@ -4,9 +4,9 @@ availableChannels = ['new_stat', 'save_chart', 'open_chart', 'delete_chart'];
 
 contextBridge.exposeInMainWorld(
     'ipc', {
-        send: (channel, data) => {
+        send: (channel, ...args) => {
             if (availableChannels.includes(channel)) {
-                ipcRenderer.send(channel, data);
+                ipcRenderer.send(channel, ...args);
             }
         } ,
         on: (channel, func) => {

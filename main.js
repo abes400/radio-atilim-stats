@@ -1,6 +1,7 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 //const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
 const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
 
@@ -8,10 +9,15 @@ const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=17329
 let window = null;
 let currentStat = null;
 
-//['new_stat', 'save_chart', 'open_chart', 'delete_chart'];
+//['new_stat', 'save_chart', 'open_chart', 'delete_chart', 'update_list', 'fetch_list'];
 
-ipcMain.on('save_chart', async (event, saveDataBuffer) => {
-    fs.writeFileSync('', saveDataBuffer);
+ipcMain.on('save_chart', async (event, chartInfo, saveDataBuffer) => {
+    const fileName = `${chartInfo.beginDate.replaceAll('/', '-')}-${chartInfo.startTime.replaceAll(':', '-')}-${chartInfo.endTime.replaceAll(':', '-')}.stat`;
+    const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
+    if(!fs.existsSync(filePath))
+        fs.mkdirSync(filePath, {recursive: true});
+    fs.writeFileSync(path.join(filePath, fileName), saveDataBuffer);
+    window.webContents.send('update_list', chartInfo);
 });
 
 const fetchData = async () => {

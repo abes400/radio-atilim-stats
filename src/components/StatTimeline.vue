@@ -120,14 +120,18 @@ export default {
                 this.data.datasets.map(dataset => dataset.data)
             ]));
 
-            window.ipc.send('save_chart', saveData);
+            const chartInfo = {
+                beginDate: this.recordBeginDate,
+                startTime: this.data.labels[0],
+                endTime: this.data.labels[this.data.labels.length - 1]
+            }
+            
+            window.ipc.send('save_chart', chartInfo, saveData);
         },
 
         handleStat(newStat) {
             console.log(this.statCount)
             if(this.statCount === this.maxStatRecord) {
-                console.log(this.data.labels[0], this.recordBeginDate, "b")
-                //Save data to file
                 this.saveChart();
                 this.clearChart();
                 this.recordBeginDate = newStat.date            
