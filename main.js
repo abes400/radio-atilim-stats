@@ -1,5 +1,6 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
+const fs = require('fs');
 //const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
 const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
 
@@ -9,8 +10,8 @@ let currentStat = null;
 
 //['new_stat', 'save_chart', 'open_chart', 'delete_chart'];
 
-ipcMain.on('save_chart', async (event, data) => {
-    console.log("works fine");
+ipcMain.on('save_chart', async (event, saveDataBuffer) => {
+    fs.writeFileSync('TEST.STAT', saveDataBuffer);
 });
 
 const fetchData = async () => {

@@ -13,6 +13,7 @@
 <script>
 import {Line} from 'vue-chartjs'
 import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend} from 'chart.js'
+import {Buffer} from 'buffer';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend)
 
@@ -114,10 +115,12 @@ export default {
         },
 
         saveChart() {
-            console.log(this.data.labels);
-            console.log(JSON.stringify(this.data.datasets.map(dataset => dataset.data)));
-            
-            //window.ipc.send('save_chart');
+            const saveData = Buffer.from(JSON.stringify([
+                this.data.labels,
+                this.data.datasets.map(dataset => dataset.data)
+            ]));
+
+            window.ipc.send('save_chart', saveData);
         },
 
         handleStat(newStat) {
