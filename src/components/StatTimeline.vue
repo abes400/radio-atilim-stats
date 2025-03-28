@@ -102,7 +102,7 @@ export default {
         loggedStat: Object,
         maxStatRecord: {
             type: Number,
-            default: 10,
+            default: 5,
         }
     },
 
@@ -113,12 +113,20 @@ export default {
             this.statCount = 0
         },
 
+        saveChart() {
+            console.log(this.data.labels);
+            console.log(JSON.stringify(this.data.datasets.map(dataset => dataset.data)));
+            
+            //window.ipc.send('save_chart');
+        },
+
         handleStat(newStat) {
             console.log(this.statCount)
             if(this.statCount === this.maxStatRecord) {
                 console.log(this.data.labels[0], this.recordBeginDate, "b")
                 //Save data to file
-                this.clearChart()
+                this.saveChart();
+                this.clearChart();
                 this.recordBeginDate = newStat.date            
             }
 

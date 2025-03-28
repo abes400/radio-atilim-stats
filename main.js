@@ -1,9 +1,17 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
-const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
+//const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
+const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
+
 
 let window = null;
 let currentStat = null;
+
+//['new_stat', 'save_chart', 'open_chart', 'delete_chart'];
+
+ipcMain.on('save_chart', async (event, data) => {
+    console.log("works fine");
+});
 
 const fetchData = async () => {
     const response = await fetch(url);
@@ -21,8 +29,8 @@ const fetchData = async () => {
 
 const createWindow = () => {
     window = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1500,
+        height: 800,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
