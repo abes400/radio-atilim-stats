@@ -29,14 +29,7 @@ export default {
     data() {
         return {
             files: [
-                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
-                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
-                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
-                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
-                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
-                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
-                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
-                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
+                    //{beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
                 ],
             
             options: {
@@ -107,6 +100,9 @@ export default {
         window.ipc.on('update_list', (chartInfo) => {
             this.files.push(chartInfo);
         })
+
+        window.ipc.invoke('fetch_list')
+            .then((result) => {this.files = result;});
     },
 
     components: {

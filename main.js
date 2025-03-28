@@ -10,15 +10,20 @@ const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
 let window = null;
 let currentStat = null;
 
-//['new_stat', 'save_chart', 'open_chart', 'delete_chart', 'update_list', 'fetch_list'];
+//[ 'open_chart', 'delete_chart', 'fetch_list'];
 
 ipcMain.on('save_chart', async (event, chartInfo, saveDataBuffer) => {
-    const fileName = `${chartInfo.beginDate.replaceAll('/', '-')}-${chartInfo.startTime.replaceAll(':', '-')}-${chartInfo.endTime.replaceAll(':', '-')}.stat`;
+    const fileName = infoToName(chartInfo);
     if(!fs.existsSync(filePath))
         fs.mkdirSync(filePath, {recursive: true});
     fs.writeFileSync(path.join(filePath, fileName), saveDataBuffer);
     window.webContents.send('update_list', chartInfo);
 });
+
+ipcMain.handle('fetch_list', async () => {
+    let fetchedListInfo = fs.readdirSync(filePath).map(fileName => nameToInfo(fileName));
+    return(fetchedListInfo);
+})
 
 const fetchData = async () => {
     const response = await fetch(url);
@@ -32,6 +37,17 @@ const fetchData = async () => {
 
     //console.log(currentStat.songtitle);
     window.webContents.send('new_stat', currentStat);
+}
+
+const nameToInfo = (fileName) => {
+    const splitFileName = fileName.replace('.stat', '').split('-');
+    return {beginDate: `${splitFileName[0]}/${splitFileName[1]}/${splitFileName[2]}`, 
+            startTime: `${splitFileName[3]}:${splitFileName[4]}:${splitFileName[5]}`, 
+            endTime:   `${splitFileName[6]}:${splitFileName[7]}:${splitFileName[8]}`} 
+}
+
+const infoToName = (chartInfo) => {
+    return `${chartInfo.beginDate.replaceAll('/', '-')}-${chartInfo.startTime.replaceAll(':', '-')}-${chartInfo.endTime.replaceAll(':', '-')}.stat`;
 }
 
 const createWindow = () => {
@@ -49,11 +65,12 @@ const createWindow = () => {
     window.loadFile('dist/index.html');
     
     //window.webContents.send('test');
-    setInterval(fetchData, 1000) 
+    
 
     
 }
 
 app.whenReady().then(() => {
     createWindow();
+    //setInterval(fetchData, 1000);
 });
