@@ -6,8 +6,8 @@
 
         <div class="list-container pin-left">
             <div v-for="file in files" :key="file" class="list-item">
-               <div>{{file.date}}</div>
-               <strong>{{file.time}}</strong>
+               <div>{{file.beginDate}}</div>
+               <strong>{{file.startTime}} - {{file.endTime}}</strong>
             </div>
         </div>
 
@@ -29,15 +29,14 @@ export default {
     data() {
         return {
             files: [
-                    {date: '11/12/2020', time: '11:30 - 12:20'},
-                    {date: '12/12/2020', time: '11:30 - 12:20'},
-                    {date: '13/12/2020', time: '11:30 - 12:20'},
-                    {date: '14/12/2020', time: '11:30 - 12:20'},
-                    {date: '15/12/2020', time: '11:30 - 12:20'},
-                    {date: '11/12/2020', time: '11:30 - 12:20'},
-                    {date: '11/12/2020', time: '11:30 - 12:20'},
-                    {date: '11/12/2020', time: '11:30 - 12:20'},
-                    {date: '11/12/2020', time: '11:30 - 12:20'},
+                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
+                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
+                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
+                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
+                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
+                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
+                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
+                    {beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
                 ],
             
             options: {
@@ -105,7 +104,9 @@ export default {
     },
 
     mounted() {
-        console.log(this.files)
+        window.ipc.on('update_list', (chartInfo) => {
+            this.files.push(chartInfo);
+        })
     },
 
     components: {
