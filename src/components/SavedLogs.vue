@@ -24,6 +24,7 @@ import {Line} from 'vue-chartjs'
 import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend} from 'chart.js'
 import {Buffer} from 'buffer';
 
+import chartData from '../config/chartData.json'
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend)
 
 export default {
@@ -50,41 +51,7 @@ export default {
 
                 interaction: { mode: 'index' },
             },
-            data: {
-                labels: [],
-                datasets:[
-                    {
-                        label: 'Current Listeners',
-                        type:'line',
-                        backgroundColor: '#3FB17F',
-                        borderColor: '#329067',
-                        pointStyle: false,
-                        yAxisID: 'listenerCountAxis',
-                        tension: 0.2,
-                        data:[]
-                    },
-
-                    {
-                        label: 'Unique Listeners',
-                        type:'line',
-                        backgroundColor: '#337EC9',
-                        borderColor: '#21578C',
-                        pointStyle: false,
-                        yAxisID: 'listenerCountAxis',
-                        tension: 0.2,
-                        data:[]
-                    },
-
-                    {
-                        label: 'Avg. Listen Time',
-                        type: 'bar',
-                        backgroundColor: '#6E4621',
-                        borderColor: '#BD4A1D',
-                        yAxisID: 'listenTimeAxis',
-                        data: []
-                    }
-                ]
-            }, 
+            data: chartData,
             renderTriggerKey: false,
         }
     },

@@ -1,0 +1,35 @@
+{
+    "labels": [],
+    "datasets":[
+        {
+            "label": "Current Listeners",
+            "type":"line",
+            "backgroundColor": "#3FB17F",
+            "borderColor": "#329067",
+            "pointStyle": false,
+            "yAxisID": "listenerCountAxis",
+            "tension": 0.2,
+            "data":[]
+        },
+
+        {
+            "label": "Unique Listeners",
+            "type":"line",
+            "backgroundColor": "#337EC9",
+            "borderColor": "#21578C",
+            "pointStyle": false,
+            "yAxisID": "listenerCountAxis",
+            "tension": 0.2,
+            "data":[]
+        },
+
+        {
+            "label": "Avg. Listen Time",
+            "type": "bar",
+            "backgroundColor": "#6E4621",
+            "borderColor": "#BD4A1D",
+            "yAxisID": "listenTimeAxis",
+            "data": []
+        }
+    ]
+}
