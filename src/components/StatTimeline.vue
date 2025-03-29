@@ -1,8 +1,16 @@
 <template>
   <div class="card">
     <div class="card-title">
-        <strong>Stat Timeline</strong>
-        </div>
+        <div class="pin-left">
+            <button> Pause </button>
+            <button> Stop </button>
+        </div> 
+        <div class="pin-right">
+            <button> Avg Listeners </button>
+            <button> Max Counr </button>
+            <button> Yanıyy </button>
+        </div> 
+    </div>
     <div class="card-content">
         <Line style="padding: 20px" :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
     </div>

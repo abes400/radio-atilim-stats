@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="timeline-container pin-right">
+        <div class="timeline-container pop-in pin-right">
             <Line :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
         </div>
 
@@ -129,13 +129,15 @@ export default {
 
 <style>
 .list-container {
-    height: calc(100% - 80px);
-    width: 300px;
+    height: calc(100% - 42px);
+    border-right: solid 1px #282828;
+    width: 330px;
 }
 
 .timeline-container {
-    height: calc(100% - 80px);
+    height: calc(100% - 70px);
     width: calc(100% - 360px);
+    right: 15px !important;
 }
 
 </style>

@@ -5,8 +5,43 @@
 }
 
 button{
-    margin: 1px;
-    background-color: #6e6e6e;
+    margin: 7px;
+    
+    background-color: #272727;
+    color: #9a9a9a;
+    box-shadow: -2px -2px 3px rgb(92, 92, 92), 2px 2px 3px rgb(12, 12, 12);
+    
+    transition: filter 0.1s;
+
+    padding: 5px 10px;
+    border: none;
+    border-radius: 17px;
+}
+button:hover {
+    filter: brightness(120%);
+}
+button:active {
+    box-shadow: -1px -1px 3px inset rgb(92, 92, 92), inset 1px 1px 3px rgb(12, 12, 12);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #040303;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #616161;
+}
+
+.pop-out {
+    box-shadow: -2px -2px 7px rgb(92, 92, 92), 2px 2px 7px rgb(12, 12, 12);
+    border-radius: 5px;
+}
+
+.pop-in {
+    box-shadow: -2px -2px 5px inset rgb(92, 92, 92), 2px 2px 5px inset rgb(12, 12, 12);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 10px;
 }
 
 .card{
@@ -22,14 +57,11 @@ button{
 }
 
 .list-container {
-    background-color: #3f3f3f;
-    border-radius: 5px;
-    box-shadow: -3px -3px 10px rgb(92, 92, 92), 3px 3px 10px rgb(32, 32, 32);
     overflow-y: auto;
 }
 
 .list-item {
-    border-bottom: solid 1px #9a9a9a;
+    border-bottom: solid 1px #282828;
     padding: 15px;
 }
 
@@ -38,11 +70,11 @@ button{
 }
 .pin-left{
     position: absolute;
-    left: 20px;
+    left: 0px;
 }
 .pin-right{
     position: absolute;
-    right: 20px;
+    right: 0px;
 }
 
 
@@ -55,7 +87,6 @@ button{
     height: 40px;
 
     border-bottom: solid 1px #282828;
-    /*text-shadow: -1px -1px 1px rgb(32, 32, 32), 1px 1px 1px rgb(92, 92, 92);*/
 }
 
 .card-content{
