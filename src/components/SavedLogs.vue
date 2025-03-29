@@ -1,6 +1,8 @@
 <template>
 <div class="card">
-<div class="card-title"><strong>Saved Logs</strong></div>
+    <div class="card-title">
+        <strong>Saved Logs</strong>
+    </div>
 
     <div class="card-content" >
 
