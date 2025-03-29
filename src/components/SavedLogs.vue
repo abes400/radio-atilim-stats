@@ -127,7 +127,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .list-container {
     height: calc(100% - 42px);
     border-right: solid 1px #282828;

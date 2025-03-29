@@ -12,7 +12,9 @@
         </div> 
     </div>
     <div class="card-content">
-        <Line style="padding: 20px" :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+        <div class="timeline-container pop-in">
+            <Line :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+        </div>   
     </div>
 
   </div>
@@ -167,3 +169,9 @@ export default {
 
 }
 </script>
+<style scoped>
+.timeline-container {
+    height: calc(100% - 25px);
+    width: calc(100% - 15px);
+}
+</style>
