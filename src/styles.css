@@ -10,11 +10,14 @@ button{
     background-color: #272727;
     color: #9a9a9a;
     box-shadow: -2px -2px 3px rgb(92, 92, 92), 2px 2px 3px rgb(12, 12, 12);
+
+    
     
     transition: filter 0.1s;
 
     padding: 5px 10px;
-    border: none;
+    border: solid 1.5px;
+    border-color: #00000000;
     border-radius: 17px;
 }
 button:hover {

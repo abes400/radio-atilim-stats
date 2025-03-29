@@ -5,9 +5,9 @@
     </div>
 
     <div class="pin-right">
-        <button> Current Listeners </button>
-        <button> Unique Listeners </button>
-        <button> Avg. Listen Time </button>
+        <button @click="toggleChartDataset(0)"> Current Listeners </button>
+        <button @click="toggleChartDataset(1)"> Unique Listeners </button>
+        <button @click="toggleChartDataset(2)"> Avg. Listen Time </button>
     </div> 
 
     <div class="card-content" >
@@ -20,7 +20,7 @@
         </div>
 
         <div class="timeline-container pop-in pin-right">
-            <Line :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+            <Line ref="savedStatChart" :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
         </div>
 
     </div>
@@ -39,6 +39,7 @@ export default {
     data() {
         return {
             files: [],
+            datasetVisibleAt: [true, true, true],
             
             options: {
                 responsive: true,
@@ -78,6 +79,15 @@ export default {
             this.data.labels.length = 0
             this.data.datasets.forEach((dataset) => {dataset.data.length = 0})
             this.statCount = 0
+        },
+
+        toggleChartDataset(index) {
+            if(this.datasetVisibleAt[index])
+                this.$refs.savedStatChart.chart.hide(index);
+            else
+                this.$refs.savedStatChart.chart.show(index);
+            this.datasetVisibleAt[index] = this.$refs.savedStatChart.chart.isDatasetVisible(index);
+            console.log(this.datasetVisibleAt);
         },
 
         openChart(index) {
