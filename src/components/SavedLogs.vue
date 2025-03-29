@@ -5,9 +5,18 @@
     </div>
 
     <div class="pin-right">
-        <button @click="toggleChartDataset(0)"> Current Listeners </button>
-        <button @click="toggleChartDataset(1)"> Unique Listeners </button>
-        <button @click="toggleChartDataset(2)"> Avg. Listen Time </button>
+        <button @click="toggleChartDataset(0)" 
+            :style="{'border-color': data.datasets[0].hidden ? '#00000000': '#3FB17F'}">
+            Current Listeners
+        </button>
+        <button @click="toggleChartDataset(1)" 
+            :style="{'border-color': data.datasets[1].hidden ? '#00000000' : '#337EC9' }">
+            Unique Listeners
+        </button>
+        <button @click="toggleChartDataset(2)" 
+            :style="{'border-color': data.datasets[2].hidden ? '#00000000' : '#FF9D00'}">
+            Avg. Listen Time
+        </button>
     </div> 
 
     <div class="card-content" >
@@ -20,7 +29,7 @@
         </div>
 
         <div class="timeline-container pop-in pin-right">
-            <Line ref="savedStatChart" :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+            <Line :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
         </div>
 
     </div>
@@ -39,7 +48,6 @@ export default {
     data() {
         return {
             files: [],
-            datasetVisibleAt: [true, true, true],
             
             options: {
                 responsive: true,
@@ -59,6 +67,8 @@ export default {
                 },
 
                 interaction: { mode: 'index' },
+
+                plugins: { legend: { display: false, } }
             },
             data: chartData,
             renderTriggerKey: false,
@@ -82,12 +92,8 @@ export default {
         },
 
         toggleChartDataset(index) {
-            if(this.datasetVisibleAt[index])
-                this.$refs.savedStatChart.chart.hide(index);
-            else
-                this.$refs.savedStatChart.chart.show(index);
-            this.datasetVisibleAt[index] = this.$refs.savedStatChart.chart.isDatasetVisible(index);
-            console.log(this.datasetVisibleAt);
+            this.data.datasets[index].hidden = !this.data.datasets[index].hidden;
+            this.renderTriggerKey = !this.renderTriggerKey;
         },
 
         openChart(index) {

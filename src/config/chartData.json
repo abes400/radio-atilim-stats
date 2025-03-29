@@ -9,6 +9,7 @@
             "pointStyle": false,
             "yAxisID": "listenerCountAxis",
             "tension": 0.2,
+            "hidden": false,
             "data":[]
         },
 
@@ -20,6 +21,7 @@
             "pointStyle": false,
             "yAxisID": "listenerCountAxis",
             "tension": 0.2,
+            "hidden": false,
             "data":[]
         },
 
@@ -29,6 +31,7 @@
             "backgroundColor": "#6E4621",
             "borderColor": "#BD4A1D",
             "yAxisID": "listenTimeAxis",
+            "hidden": false,
             "data": []
         }
     ]
