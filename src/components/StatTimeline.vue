@@ -6,9 +6,9 @@
             <button> Stop </button>
         </div> 
         <div class="pin-right">
-            <button> Avg Listeners </button>
-            <button> Max Counr </button>
-            <button> Yanıyy </button>
+            <button> Current Listeners </button>
+            <button> Unique Listeners </button>
+            <button> Avg. Listen Time </button>
         </div> 
     </div>
     <div class="card-content">
