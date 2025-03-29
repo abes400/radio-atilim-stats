@@ -5,7 +5,7 @@
     <div class="card-content" >
 
         <div class="list-container pin-left">
-            <div v-for="file in files" :key="file" class="list-item">
+            <div v-for="(file, index) in files" :key="file" class="list-item" @click="openChart(index)">
                <div>{{file.beginDate}}</div>
                <strong>{{file.startTime}} - {{file.endTime}}</strong>
             </div>
@@ -22,21 +22,18 @@
 <script>
 import {Line} from 'vue-chartjs'
 import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend} from 'chart.js'
+import {Buffer} from 'buffer';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend)
 
 export default {
     data() {
         return {
-            files: [
-                    //{beginDate: '11/12/2020', startTime: '11:30', endTime: '12:20'},
-                ],
+            files: [],
             
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-
-                animation: false,
 
                 scales: {
                     listenerCountAxis: {
@@ -52,11 +49,6 @@ export default {
                 },
 
                 interaction: { mode: 'index' },
-                
-                plugins: {
-                    legend: { onClick: null, }
-                }
-                
             },
             data: {
                 labels: [],
@@ -93,6 +85,7 @@ export default {
                     }
                 ]
             }, 
+            renderTriggerKey: false,
         }
     },
 
@@ -103,6 +96,28 @@ export default {
 
         window.ipc.invoke('fetch_list')
             .then((result) => {this.files = result;});
+    },
+
+    methods: {
+        clearChart() {
+            this.data.labels.length = 0
+            this.data.datasets.forEach((dataset) => {dataset.data.length = 0})
+            this.statCount = 0
+        },
+
+        openChart(index) {
+            window.ipc.invoke('open_chart', JSON.parse(JSON.stringify(this.files[index])))
+                .then((result) => {
+                    this.clearChart();
+                    // That's right, I made buffer out of a "buffer", otherwise it wouldn't turn into a string.
+                    const newData = JSON.parse(Buffer.from(result).toString());
+                    this.data.labels = newData[0];
+                    newData[1].forEach((dataset, index) => {
+                        this.data.datasets[index].data = dataset
+                    })
+                    this.renderTriggerKey = !this.renderTriggerKey
+                })
+        }
     },
 
     components: {

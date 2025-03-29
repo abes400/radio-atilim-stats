@@ -103,7 +103,7 @@ export default {
         loggedStat: Object,
         maxStatRecord: {
             type: Number,
-            default: 5,
+            default: 15,
         }
     },
 

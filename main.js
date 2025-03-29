@@ -10,15 +10,20 @@ const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
 let window = null;
 let currentStat = null;
 
-//[ 'open_chart', 'delete_chart', 'fetch_list'];
+//['delete_chart'];
 
-ipcMain.on('save_chart', async (event, chartInfo, saveDataBuffer) => {
+ipcMain.on('save_chart', async (event, chartInfo, saveData) => {
     const fileName = infoToName(chartInfo);
     if(!fs.existsSync(filePath))
         fs.mkdirSync(filePath, {recursive: true});
-    fs.writeFileSync(path.join(filePath, fileName), saveDataBuffer);
+    fs.writeFileSync(path.join(filePath, fileName), saveData);
     window.webContents.send('update_list', chartInfo);
 });
+
+ipcMain.handle('open_chart', async(event, chartInfo) => {
+    let fileContent = fs.readFileSync(path.join(filePath, infoToName(chartInfo)));
+    return fileContent;
+})
 
 ipcMain.handle('fetch_list', async () => {
     let fetchedListInfo = fs.readdirSync(filePath).map(fileName => nameToInfo(fileName));
@@ -63,14 +68,9 @@ const createWindow = () => {
     });
 
     window.loadFile('dist/index.html');
-    
-    //window.webContents.send('test');
-    
-
-    
 }
 
 app.whenReady().then(() => {
     createWindow();
-    //setInterval(fetchData, 1000);
+    setInterval(fetchData, 1000);
 });
