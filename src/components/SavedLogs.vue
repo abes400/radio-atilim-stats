@@ -4,6 +4,12 @@
         <strong>Saved Logs</strong>
     </div>
 
+    <div class="pin-right">
+        <button> Current Listeners </button>
+        <button> Unique Listeners </button>
+        <button> Avg. Listen Time </button>
+    </div> 
+
     <div class="card-content" >
 
         <div class="list-container pin-left">
