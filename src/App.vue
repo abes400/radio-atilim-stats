@@ -1,4 +1,7 @@
 <template>
+<div class="title-bar">
+  <img src="@/assets/logo.png">
+</div>
 <div class="homepage">
   <SplitterGroup direction="vertical">
     <SplitterPanel :min-size="49" class="card-splitter">
@@ -44,7 +47,16 @@ export default {
 
 .homepage{
   width: calc(100vw - 10px);
-  height: calc(100vh - 17px);
+  height: calc(100vh - 37px);
 }
+
+.title-bar {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 </style>
