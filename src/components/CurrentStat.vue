@@ -4,43 +4,30 @@
 
     <div class="card-content" v-if="stat">
         
-        <div class="primary-value">{{stat.currentlisteners}}</div>
+        <div class="primary centered-value">{{stat.currentlisteners}}</div>
         
-
         <div class="drawer pop-in">
             <button class="drawer-button pin-bottom" @click="details = !this.details">
                 <font-awesome-icon v-if="details" icon="fa-solid fa-caret-down" />
                 <font-awesome-icon v-else icon="fa-solid fa-caret-up"/>
             </button>
             <div class="drawer-content" v-show="this.details">
-                <div>
-                    a
+                <div class="centered-value">
+                    Peak Listeners
+                    <div class="secondary"> {{stat.peaklisteners}} </div>
                 </div>
-                <div>
-                    a
+                <div class="centered-value">
+                    Max. Listeners
+                    <div class="secondary"> {{stat.maxlisteners}} </div>
                 </div>
-                <div>
-                    a
+                <div class="centered-value">
+                    Unique Listeners
+                    <div class="secondary"> {{stat.uniquelisteners}} </div>
                 </div>
-                <div>
-                    a
+                <div class="centered-value">
+                    Avg. Time:
+                    <div class="secondary"> {{stat.averagetime}} </div>
                 </div>
-                <!--
-                <table>
-                    <tr>
-                        <td><strong>Peak Listeners:</strong></td>
-                        <td>{{stat.peaklisteners}}</td>
-                        <td><strong>Max Listeners:</strong></td>
-                        <td>{{stat.maxlisteners}}</td> 
-                           
-                    </tr>
-                    <tr>
-                        <td><strong>Unique Listeners:</strong></td>
-                        <td>{{stat.uniquelisteners}}</td>
-                        <td><strong>Avg. Time:</strong></td>
-                        <td>{{stat.averagetime}}</td>
-                    </tr>
-                </table>-->
             </div>
         </div>
         
@@ -84,7 +71,7 @@ export default {
 
 <style scoped>
 
-.primary-value{
+.centered-value{
     display: flex;
     flex-direction: column;
     align-items: center;
