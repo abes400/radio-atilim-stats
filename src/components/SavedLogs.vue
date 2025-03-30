@@ -22,7 +22,7 @@
     <div class="card-content" >
 
         <div class="list-container pin-left">
-            <div v-for="(file, index) in files" :key="file" class="list-item" @click="openChart(index)">
+            <div v-for="(file, index) in files" :key="file" class="list-item">
                <div>
                     <div>{{file.beginDate}}</div>
                     <strong>{{file.startTime}} - {{file.endTime}}</strong>
@@ -31,7 +31,7 @@
                     <button>
                         <font-awesome-icon icon="fa-solid fa-trash"/>
                     </button>
-                    <button>
+                    <button @click="openChart(index)">
                         <font-awesome-icon icon="fa-solid fa-eye"/>
                     </button>
                </div>

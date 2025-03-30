@@ -8,7 +8,10 @@
         
 
         <div class="drawer">
-            <button class="drawer-button pin-bottom" @click="this.details = !this.details">...</button>
+            <button class="drawer-button pin-bottom" @click="details = !this.details">
+                <font-awesome-icon v-if="details" icon="fa-solid fa-caret-down" />
+                <font-awesome-icon v-else icon="fa-solid fa-caret-up"/>
+            </button>
             <div class="drawer-content" v-show="this.details">
                 <table>
                     <tr>
