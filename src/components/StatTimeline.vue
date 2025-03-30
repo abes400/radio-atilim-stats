@@ -22,7 +22,7 @@
 </div>
 <div class="card-content">
     <div class="timeline-container pop-in">
-        <Line :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+        <chart :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
     </div>   
 </div>
 
@@ -30,13 +30,8 @@
 </template>
 
 <script>
-import {Line} from 'vue-chartjs'
-import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend} from 'chart.js'
-
 import chartData from '../config/chartData.json'
 import {Buffer} from 'buffer';
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend)
 
 const CURRENT_LISTENER = 0
 const UNIQUE_LISTENERS = 1
@@ -143,11 +138,6 @@ export default {
             this.statCount++;                
         }
     },
-
-    components: {
-        Line,
-    }
-
 }
 </script>
 <style scoped>

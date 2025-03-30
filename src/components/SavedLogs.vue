@@ -29,7 +29,7 @@
         </div>
 
         <div class="timeline-container pop-in pin-right">
-            <Line :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+            <chart :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
         </div>
 
     </div>
@@ -37,12 +37,8 @@
 </template>
 
 <script>
-import {Line} from 'vue-chartjs'
-import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend} from 'chart.js'
 import {Buffer} from 'buffer';
-
 import chartData from '../config/chartData.json'
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, BarController, Title, Tooltip, Legend)
 
 export default {
     data() {
@@ -110,11 +106,6 @@ export default {
                 })
         }
     },
-
-    components: {
-        Line,
-    }
-
 }
 </script>
 
