@@ -28,7 +28,7 @@
                     <strong>{{file.startTime}} - {{file.endTime}}</strong>
                </div>
                <div class="pin-right" style="right: 5px">
-                    <button>
+                    <button @click="deleteChart(index)">
                         <font-awesome-icon icon="fa-solid fa-trash"/>
                     </button>
                     <button @click="openChart(index)">
@@ -114,7 +114,12 @@ export default {
                     })
                     this.renderTriggerKey = !this.renderTriggerKey
                 })
-        }
+        },
+
+        deleteChart(index) {
+            //console.log(this.files[index])
+            window.ipc.send('delete_chart', this.files[index]);
+        },
     },
 }
 </script>

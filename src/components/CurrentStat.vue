@@ -7,7 +7,7 @@
         <div class="primary-value">{{stat.currentlisteners}}</div>
         
 
-        <div class="drawer">
+        <div class="drawer pop-in">
             <button class="drawer-button pin-bottom" @click="details = !this.details">
                 <font-awesome-icon v-if="details" icon="fa-solid fa-caret-down" />
                 <font-awesome-icon v-else icon="fa-solid fa-caret-up"/>
@@ -69,11 +69,7 @@ export default {
 }
 </script>
 
-<style>
-.card{
-    width: 100%;
-    height: 100%;
-}
+<style scoped>
 
 .primary-value{
     display: flex;
@@ -83,12 +79,6 @@ export default {
     flex: 1;
 }
 
-.card-content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 
 .drawer-content{
     display: flex;
@@ -96,6 +86,10 @@ export default {
     justify-content: center;
     height: 50px;
     font-size: 10pt;
+}
+
+.pop-in{
+   padding: 0 ; 
 }
 
 </style>
