@@ -59,8 +59,10 @@ const infoToName = (chartInfo) => {
 
 const createWindow = () => {
     window = new BrowserWindow({
-        width: 1500,
-        height: 800,
+        minWidth: 1060,
+        minHeight: 600,
+        width: 1070,
+        height: 700,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,

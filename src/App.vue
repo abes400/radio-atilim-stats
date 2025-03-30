@@ -1,19 +1,19 @@
 <template>
 <div class="homepage">
   <SplitterGroup direction="vertical">
-    <SplitterPanel class="card-splitter">
+    <SplitterPanel :min-size="49" class="card-splitter">
       <SplitterGroup direction="horizontal">
-    <SplitterPanel class="card-splitter">
-      <CurrentStat/>
+        <SplitterPanel :min-size="33" class="card-splitter">
+          <CurrentStat/>
+        </SplitterPanel>
+        <SplitterResizeHandle/>
+        <SplitterPanel :min-size="50" class="card-splitter">
+          <StatTimeline/>
+        </SplitterPanel>
+      </SplitterGroup>
     </SplitterPanel>
     <SplitterResizeHandle/>
-    <SplitterPanel class="card-splitter">
-      <StatTimeline/>
-    </SplitterPanel>
-  </SplitterGroup>
-    </SplitterPanel>
-    <SplitterResizeHandle/>
-    <SplitterPanel class="card-splitter">
+    <SplitterPanel :min-size="40" class="card-splitter">
       <SavedLogs/>
     </SplitterPanel>
   </SplitterGroup>
@@ -36,7 +36,6 @@ export default {
     SplitterGroup,
     SplitterPanel,
     SplitterResizeHandle
-
   },
 }
 </script>

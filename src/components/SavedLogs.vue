@@ -117,7 +117,6 @@ export default {
         },
 
         deleteChart(index) {
-            //console.log(this.files[index])
             window.ipc.send('delete_chart', this.files[index]);
         },
     },

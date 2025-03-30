@@ -85,7 +85,7 @@ export default {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     padding: 10px;
     height: 50px;
-    font-size: 10pt;
+    font-size: 7pt;
 }
 
 .pop-in{

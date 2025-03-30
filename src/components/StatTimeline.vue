@@ -121,7 +121,6 @@ export default {
         },
 
         handleStat(newStat) {
-            console.log(this.statCount)
             if(this.statCount === this.maxStatRecord) {
                 this.saveChart();
                 this.clearChart();
@@ -131,7 +130,6 @@ export default {
             // FIX
             else if(this.statCount === 0) {
                 this.recordBeginDate = newStat.date     
-                console.log(this.recordBeginDate, "a")          
             }
             
             this.data.labels.push(newStat.time)
