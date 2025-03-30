@@ -113,8 +113,13 @@ button:active {
     height: 25px;
     width: 100%;
     background: transparent;
+    box-shadow: none;
     border: none;
     color: #9a9a9a;
+}
+
+.drawer-button:active{
+    box-shadow: none;
 }
 
 .drawer {
