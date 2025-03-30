@@ -128,12 +128,12 @@ export default {
 .list-container {
     height: calc(100% - 42px);
     border-right: solid 1px #282828;
-    width: 260px;
+    width: 270px;
 }
 
 .timeline-container {
     height: calc(100% - 70px);
-    width: calc(100% - 290px);
+    width: calc(100% - 300px);
     right: 15px !important;
 }
 

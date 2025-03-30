@@ -13,6 +13,19 @@
                 <font-awesome-icon v-else icon="fa-solid fa-caret-up"/>
             </button>
             <div class="drawer-content" v-show="this.details">
+                <div>
+                    a
+                </div>
+                <div>
+                    a
+                </div>
+                <div>
+                    a
+                </div>
+                <div>
+                    a
+                </div>
+                <!--
                 <table>
                     <tr>
                         <td><strong>Peak Listeners:</strong></td>
@@ -27,7 +40,7 @@
                         <td><strong>Avg. Time:</strong></td>
                         <td>{{stat.averagetime}}</td>
                     </tr>
-                </table>
+                </table>-->
             </div>
         </div>
         
@@ -81,9 +94,9 @@ export default {
 
 
 .drawer-content{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 10px;
     height: 50px;
     font-size: 10pt;
 }

@@ -6,9 +6,10 @@ const os = require('os');
 const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
 
+// TODO: Check the EIO dialog and try to fix it accordingly
+// ! To reprodue, keep the program open overnight with recording disabled
 
 let window = null;
-let currentStat = null;
 
 //['delete_chart'];
 
@@ -31,17 +32,18 @@ ipcMain.handle('fetch_list', async () => {
 })
 
 const fetchData = async () => {
-    const response = await fetch(url);
-    currentStat = await(response.json())
+    let response = await fetch(url);
+    let currentStat = await response.json()
     
-    const timeInfo = new Date()
-    const time = `${timeInfo.getHours()}:${timeInfo.getMinutes()}:${timeInfo.getSeconds()}`
-    const date = `${timeInfo.getFullYear()}/${timeInfo.getMonth() + 1}/${timeInfo.getDate()}`
+    let timeInfo = new Date()
+    const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
+    const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
     currentStat.time = time;
     currentStat.date = date;
 
-    //console.log(currentStat.songtitle);
     window.webContents.send('new_stat', currentStat);
+
+    //currentStat = timeInfo = response = null;
 }
 
 const nameToInfo = (fileName) => {
