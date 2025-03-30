@@ -1,23 +1,32 @@
 <template>
-  <div class="card">
-    <div class="card-title">
-        <div class="pin-left">
-            <button> Pause </button>
-            <button> Stop </button>
-        </div> 
-        <div class="pin-right">
-            <button> Current Listeners </button>
-            <button> Unique Listeners </button>
-            <button> Avg. Listen Time </button>
-        </div> 
-    </div>
-    <div class="card-content">
-        <div class="timeline-container pop-in">
-            <Line :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
-        </div>   
-    </div>
+<div class="card">
+<div class="card-title">
+    <div class="pin-left">
+        <button> Pause </button>
+        <button> Stop </button>
+    </div> 
+    <div class="pin-right">
+        <button @click="toggleChartDataset(0)" 
+            :style="{'border-color': data.datasets[0].hidden ? '#00000000': '#3FB17F'}">
+            Current Listeners
+        </button>
+        <button @click="toggleChartDataset(1)" 
+            :style="{'border-color': data.datasets[1].hidden ? '#00000000' : '#337EC9' }">
+            Unique Listeners
+        </button>
+        <button @click="toggleChartDataset(2)" 
+            :style="{'border-color': data.datasets[2].hidden ? '#00000000' : '#FF9D00'}">
+            Avg. Listen Time
+        </button>
+    </div> 
+</div>
+<div class="card-content">
+    <div class="timeline-container pop-in">
+        <Line :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+    </div>   
+</div>
 
-  </div>
+</div>
 </template>
 
 <script>
@@ -62,9 +71,7 @@ export default {
 
                     interaction: { mode: 'index' },
                     
-                    plugins: {
-                        legend: { onClick: null, }
-                    }
+                    plugins: { legend: { display: false, } }
                     
                 },
             data: chartData,
@@ -90,6 +97,10 @@ export default {
             this.data.labels.length = 0
             this.data.datasets.forEach((dataset) => {dataset.data.length = 0})
             this.statCount = 0
+        },
+        toggleChartDataset(index) {
+            this.data.datasets[index].hidden = !this.data.datasets[index].hidden;
+            this.renderTriggerKey = !this.renderTriggerKey;
         },
 
         saveChart() {

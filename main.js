@@ -72,5 +72,5 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
     createWindow();
-    //setInterval(fetchData, 1000);
+    setInterval(fetchData, 1000);
 });

@@ -70,7 +70,7 @@ export default {
 
                 plugins: { legend: { display: false, } }
             },
-            data: chartData,
+            data: structuredClone(chartData),
             renderTriggerKey: false,
         }
     },
