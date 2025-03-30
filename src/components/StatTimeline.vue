@@ -2,8 +2,8 @@
 <div class="card">
 <div class="card-title">
     <div class="pin-left">
-        <button> Pause </button>
-        <button> Stop </button>
+        <button @click="isRecording = !isRecording"> {{isRecording ? 'Pause' : 'Record'}} </button>
+        <button @click="if(statCount) saveChart(); clearChart(); this.renderTriggerKey = !this.renderTriggerKey"> Stop </button>
     </div> 
     <div class="pin-right">
         <button @click="toggleChartDataset(0)" 
@@ -48,39 +48,40 @@ export default {
     data() {
         return {
             statCount: 0,
+            isRecording: true,
             recordBeginDate: '',
-            recording: false,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
 
-                    animation: false,
+                animation: false,
 
-                    scales: {
-                        listenerCountAxis: {
-                            beginAtZero: false,
-                            position: 'left',
-                            ticks: { callback: (val) => {if(val % 1 === 0) return val;} }
-                        },
-                        listenTimeAxis: {
-                            beginAtZero: false,
-                            position: 'right',
-                        },
-                        
+                scales: {
+                    listenerCountAxis: {
+                        beginAtZero: false,
+                        position: 'left',
+                        ticks: { callback: (val) => {if(val % 1 === 0) return val;} }
                     },
-
-                    interaction: { mode: 'index' },
-                    
-                    plugins: { legend: { display: false, } }
+                    listenTimeAxis: {
+                        beginAtZero: false,
+                        position: 'right',
+                    },
                     
                 },
+
+                interaction: { mode: 'index' },
+                
+                plugins: { legend: { display: false, } }
+                
+            },
             data: chartData,
             renderTriggerKey: false,
         }
     },
     mounted() {
         window.ipc.on('new_stat', (new_stat) => {
-            this.handleStat(new_stat);
+            if(this.isRecording)
+                this.handleStat(new_stat);
         })
     },
 
@@ -98,6 +99,7 @@ export default {
             this.data.datasets.forEach((dataset) => {dataset.data.length = 0})
             this.statCount = 0
         },
+
         toggleChartDataset(index) {
             this.data.datasets[index].hidden = !this.data.datasets[index].hidden;
             this.renderTriggerKey = !this.renderTriggerKey;
