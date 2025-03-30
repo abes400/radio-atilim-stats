@@ -2,8 +2,13 @@
 <div class="card">
 <div class="card-title">
     <div class="pin-left">
-        <button @click="isRecording = !isRecording"> {{isRecording ? 'Pause' : 'Record'}} </button>
-        <button @click="if(statCount) saveChart(); clearChart(); this.renderTriggerKey = !this.renderTriggerKey"> Stop </button>
+        <button @click="isRecording = !isRecording">
+            <font-awesome-icon v-if="!isRecording" icon="fa-solid fa-circle" />
+            <font-awesome-icon v-else icon="fa-solid fa-pause"/>
+        </button>
+        <button :disabled="!statCount" @click="saveChart(); clearChart(); this.renderTriggerKey = !this.renderTriggerKey"> 
+            <font-awesome-icon icon="fa-solid fa-download"/>
+        </button>
     </div> 
     <div class="pin-right">
         <button @click="toggleChartDataset(0)" 

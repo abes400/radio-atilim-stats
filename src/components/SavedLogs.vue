@@ -23,8 +23,18 @@
 
         <div class="list-container pin-left">
             <div v-for="(file, index) in files" :key="file" class="list-item" @click="openChart(index)">
-               <div>{{file.beginDate}}</div>
-               <strong>{{file.startTime}} - {{file.endTime}}</strong>
+               <div>
+                    <div>{{file.beginDate}}</div>
+                    <strong>{{file.startTime}} - {{file.endTime}}</strong>
+               </div>
+               <div class="pin-right" style="right: 5px">
+                    <button>
+                        <font-awesome-icon icon="fa-solid fa-trash"/>
+                    </button>
+                    <button>
+                        <font-awesome-icon icon="fa-solid fa-eye"/>
+                    </button>
+               </div>
             </div>
         </div>
 
@@ -113,12 +123,12 @@ export default {
 .list-container {
     height: calc(100% - 42px);
     border-right: solid 1px #282828;
-    width: 330px;
+    width: 260px;
 }
 
 .timeline-container {
     height: calc(100% - 70px);
-    width: calc(100% - 360px);
+    width: calc(100% - 290px);
     right: 15px !important;
 }
 
