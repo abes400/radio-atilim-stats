@@ -1,6 +1,12 @@
 :root{
-    background-color: #272727;
-    color: #9a9a9a;
+    --backgnd: #272727;
+    --text: #9A9A9A;
+    --shadow-bright: #5C5C5C;
+    --shadow-dark: #0C0C0C;
+    --outline: #282828;
+
+    background-color: var(--backgnd);
+    color: var(--text);
     user-select: none;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -8,9 +14,9 @@
 button{
     margin: 7px;
     
-    background-color: #272727;
-    color: #9a9a9a;
-    box-shadow: -2px -2px 3px rgb(92, 92, 92), 2px 2px 3px rgb(12, 12, 12);
+    background-color: var(--backgnd);
+    color: var(--text);
+    box-shadow: -2px -2px 3px var(--shadow-bright), 2px 2px 3px var(--shadow-dark);
 
     transition: filter 0.1s;
 
@@ -19,39 +25,33 @@ button{
     border-color: #00000000;
     border-radius: 17px;
 }
+
 p {
     line-height: 1px;
     font-size: 10pt;
 }
-button:hover {
-    filter: brightness(120%);
-}
-button:active {
-    box-shadow: -1px -1px 3px inset rgb(92, 92, 92), inset 1px 1px 3px rgb(12, 12, 12);
-}
 
-::-webkit-scrollbar {
-    width: 7px;
-}
+button:hover { filter: brightness(120%); }
 
-::-webkit-scrollbar-thumb {
-    background-color: #757575;
-}
+button:active { box-shadow: -1px -1px 3px inset var(--shadow-bright), inset 1px 1px 3px var(--shadow-dark); }
 
-::-webkit-scrollbar-track {
-    background-color: #252525;
-}
+::-webkit-scrollbar { width: 7px;}
+
+::-webkit-scrollbar-thumb { background-color: var(--shadow-bright); }
+
+::-webkit-scrollbar-track { background-color: var(--outline); }
 
 .pop-out {
-    box-shadow: -2px -2px 7px rgb(92, 92, 92), 2px 2px 7px rgb(12, 12, 12);
+    box-shadow: -2px -2px 7px var(--shadow-bright), 2px 2px 7px var(--shadow-dark);
     border-radius: 5px;
 }
 
 .pop-in {
-    box-shadow: -2px -2px 5px inset rgb(92, 92, 92), 2px 2px 5px inset rgb(12, 12, 12);
+    box-shadow: -2px -2px 5px inset var(--shadow-bright), 2px 2px 5px inset var(--shadow-dark);
     border-radius: 5px;
     box-sizing: border-box;
     padding: 10px;
+    background-color: var(--backgnd);
 }
 
 .card{
@@ -60,7 +60,7 @@ button:active {
 
     background-color: #343434;
     border-radius: 5px;
-    box-shadow: 0px 0px 5px rgb(23, 23, 23);
+    box-shadow: 0px 0px 5px #171717;
 
     display: flex;
     flex-direction: column;
@@ -70,19 +70,15 @@ button:active {
     overflow: hidden;
 }
 
-.list-container {
-    overflow-y: auto;
-}
+.list-container { overflow-y: auto; }
 
 .list-item {
-    border-bottom: solid 1px #282828;
+    border-bottom: solid 1px var(--outline);
     padding: 15px;
     display: flex;
 }
 
-.pin-bottom{
-    margin-top: auto;
-}
+.pin-bottom{ margin-top: auto; }
 .pin-left{
     position: absolute;
     left: 0px;
@@ -101,7 +97,7 @@ button:active {
     width: 100%;
     height: 40px;
 
-    border-bottom: solid 1px #282828;
+    border-bottom: solid 1px var(--outline);
 }
 
 .card-content{
@@ -113,9 +109,7 @@ button:active {
     justify-content: center;
 }
 
-.card-splitter{
-    padding: 5px;
-}
+.card-splitter{ padding: 5px; }
 
 .primary{
     line-height: 15px;
@@ -137,9 +131,7 @@ button:active {
     box-shadow: none;
 }
 
-.drawer-button:active{
-    box-shadow: none;
-}
+.drawer-button:active{ box-shadow: none; }
 
 .drawer {
     width: calc(100% - 15px);
