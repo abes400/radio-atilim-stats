@@ -8,7 +8,7 @@
 export default {
     methods: {
         openAbout() {
-            console.log("about");
+            window.ipc.send('about');
         }
     }
 }

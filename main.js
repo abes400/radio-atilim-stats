@@ -12,6 +12,9 @@ const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
 let window = null;
 
 //['delete_chart'];
+ipcMain.on('about', () => {
+    app.showAboutPanel();
+})
 
 ipcMain.on('save_chart', async (event, chartInfo, saveData) => {
     const fileName = infoToName(chartInfo);
@@ -79,6 +82,12 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
+    app.setAboutPanelOptions({
+        applicationName: 'Radio Atılım Statistics Monitor',
+        applicationVersion: '1.0',
+        credits: 'Programming: Abes400',
+        copyright: 'Distributed under MIT License.',
+    })
     createWindow();
     setInterval(fetchData, 1000);
 });
