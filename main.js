@@ -6,6 +6,8 @@ const os = require('os');
 const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
 
+const {version} = require('./package.json');
+
 // TODO: Check the EIO dialog and try to fix it accordingly
 // ! To reprodue, keep the program open overnight with recording disabled
 
@@ -84,9 +86,11 @@ const createWindow = () => {
 app.whenReady().then(() => {
     app.setAboutPanelOptions({
         applicationName: 'Radio Atılım Statistics Monitor',
-        applicationVersion: '1.0',
+        applicationVersion: version,
+        version: version,
         credits: 'Programming: Abes400',
         copyright: 'Distributed under MIT License.',
+        website: 'https://github.com/abes400'
     })
     createWindow();
     setInterval(fetchData, 1000);
