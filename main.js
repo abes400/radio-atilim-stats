@@ -69,6 +69,10 @@ const createWindow = () => {
         width: 1070,
         height: 700,
         titleBarStyle: 'hidden',
+        titleBarOverlay: {
+            color: '#00000000',
+            symbolColor: '#9a9a9a'
+        },
         ...(process.platform !== 'darwin' ? {titleBarOverlay: true} : {}),
         trafficLightPosition: {x: 16, y: 12},
 
