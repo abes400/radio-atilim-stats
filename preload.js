@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-availableChannels = ['new_stat', 'save_chart', 'open_chart', 'delete_chart', 'update_list', 'fetch_list', 'about'];
+availableChannels = ['new_stat', 'save_chart', 'open_chart', 'delete_chart', 'update_list', 'fetch_list', 'about', 'toggle_auto', 'fetch'];
 
 contextBridge.exposeInMainWorld(
     'ipc', {

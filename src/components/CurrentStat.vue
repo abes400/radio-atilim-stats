@@ -1,8 +1,21 @@
 <template>
 <div class="card"> 
-    <div class="card-title" v-if="stat"><strong>Now Playing: {{stat.songtitle}}</strong></div>
+    <div class="card-title">
+        <div class="pin-left">
+            <button @click="toggleAutoFetch" 
+                :style="{'border-color': autoFetch ? '#3FB17F': '#00000000'}">
+                Auto
+            </button>
+        </div> 
+        <strong>Now Playing: {{stat.songtitle}}</strong>
+        <div class="pin-right">
+            <button @click="manualFetch" v-if="!autoFetch">
+                Refresh
+            </button>
+        </div> 
+    </div>
 
-    <div class="card-content" v-if="stat">
+    <div class="card-content">
         
         <div class="primary centered-value">{{stat.currentlisteners}}</div>
         
@@ -31,14 +44,7 @@
             </div>
         </div>
         
-    </div>
-
-    <div class="card-content" v-else>
-        Please wait...
-        
-    </div>
-    
-    
+    </div>    
 </div>
 </template>
 
@@ -47,7 +53,14 @@ export default {
     data() {
         return {
             details: true,
-            stat: null,
+            stat: {songtitle: '-',
+                   currentlisteners: '...',
+                   peaklisteners: '...',
+                   maxlisteners: '...',
+                   uniquelisteners: '...',
+                   averagetime: '...',
+                },
+            autoFetch: true,
         }
     },
 
@@ -55,17 +68,19 @@ export default {
         window.ipc.on('new_stat', (new_stat) => {
             this.stat = new_stat;
         })
+    },
+
+    methods: {
+        toggleAutoFetch() {
+            window.ipc.invoke('toggle_auto')
+                .then(result => {
+                    this.autoFetch = result;
+                })
+        },
+        manualFetch() {
+            window.ipc.send('fetch');
+        }
     }
-
-    /*
-    TODO: uniquelisteners
-    TODO: peaklisteners
-    TODO: maxlisteners
-    TODO: averagetime
-
-    TODO: songtitle
-    */
-
 }
 </script>
 

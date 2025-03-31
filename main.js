@@ -12,8 +12,8 @@ const {version} = require('./package.json');
 // ! To reprodue, keep the program open overnight with recording disabled
 
 let window = null;
+let autoFetch = true;
 
-//['delete_chart'];
 ipcMain.on('about', () => {
     app.showAboutPanel();
 });
@@ -24,6 +24,10 @@ ipcMain.on('save_chart', async (event, chartInfo, saveData) => {
         fs.mkdirSync(filePath, {recursive: true});
     fs.writeFileSync(path.join(filePath, fileName), saveData);
     window.webContents.send('update_list', chartInfo);
+});
+
+ipcMain.on('fetch',  () => {
+    fetchData();
 });
 
 ipcMain.handle('open_chart', async (event, chartInfo) => {
@@ -66,7 +70,12 @@ ipcMain.handle('delete_chart', async (event, chartInfo) => {
     } catch(e) {
         return {success: false};
     }
-})
+});
+
+ipcMain.handle('toggle_auto', () => {
+    autoFetch = !autoFetch;
+    return autoFetch;
+});
 
 const fetchData = async () => {
     let response = await fetch(url);
@@ -129,5 +138,5 @@ app.whenReady().then(() => {
         website: 'https://github.com/abes400'
     })
     createWindow();
-    setInterval(fetchData, 1000);
+    setInterval(() => { if(autoFetch) fetchData() }, 1000);
 });
