@@ -16,7 +16,7 @@
     </div>
 
     <div class="card-content">
-        
+        <p>Status</p>
         <div class="primary centered-value">{{stat.currentlisteners}}</div>
         
         <div class="drawer pop-in">
@@ -54,12 +54,12 @@ export default {
     data() {
         return {
             details: true,
-            stat: {songtitle: '-',
-                   currentlisteners: '...',
-                   peaklisteners: '...',
-                   maxlisteners: '...',
-                   uniquelisteners: '...',
-                   averagetime: '...',
+            stat: {songtitle: '',
+                   currentlisteners: '0',
+                   peaklisteners: '0',
+                   maxlisteners: '0',
+                   uniquelisteners: '0',
+                   averagetime: '0',
                 },
             autoFetch: true,
         }

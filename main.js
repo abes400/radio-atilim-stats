@@ -2,8 +2,8 @@ const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
-//const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
+//const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
+const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
 
 const {version} = require('./package.json');
@@ -77,9 +77,18 @@ ipcMain.handle('toggle_auto', () => {
     return autoFetch;
 });
 
+// At some point I'm going to have to re-implement this function.
 const fetchData = async () => {
     let response = await fetch(url);
-    let currentStat = await response.json()
+    let respJSON = await response.json()
+    let currentStat = {
+        songtitle: respJSON.songtitle,
+        currentlisteners: respJSON.currentlisteners,
+        peaklisteners: respJSON.peaklisteners,
+        maxlisteners: respJSON.maxlisteners,
+        uniquelisteners: respJSON.uniquelisteners,
+        averagetime: respJSON.averagetime
+    }
     
     let timeInfo = new Date()
     const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
