@@ -87,7 +87,12 @@ export default {
         })
 
         window.ipc.invoke('fetch_list')
-            .then((result) => {this.files = result;});
+            .then((result) => {
+                if(result.success) {
+                    this.files = result.data;
+                }
+                // TODO: add else condition handling 
+            });
     },
 
     methods: {
@@ -105,19 +110,27 @@ export default {
         openChart(index) {
             window.ipc.invoke('open_chart', JSON.parse(JSON.stringify(this.files[index])))
                 .then((result) => {
-                    this.clearChart();
-                    // That's right, I made buffer out of a "buffer", otherwise it wouldn't turn into a string.
-                    const newData = JSON.parse(Buffer.from(result).toString());
-                    this.data.labels = newData[0];
-                    newData[1].forEach((dataset, index) => {
-                        this.data.datasets[index].data = dataset
-                    })
-                    this.renderTriggerKey = !this.renderTriggerKey
+                    if(result.success) {
+                        this.clearChart();
+                        // That's right, I made buffer out of a "buffer", otherwise it wouldn't turn into a string.
+                        const newData = JSON.parse(Buffer.from(result.data).toString());
+                        this.data.labels = newData[0];
+                        newData[1].forEach((dataset, index) => {
+                            this.data.datasets[index].data = dataset
+                        })
+                        this.renderTriggerKey = !this.renderTriggerKey
+                    } 
+                    // TODO: add else condition handling 
                 })
         },
 
         deleteChart(index) {
-            window.ipc.send('delete_chart', this.files[index]);
+            window.ipc.invoke('delete_chart', JSON.parse(JSON.stringify(this.files[index])))
+                .then((result) => {
+                    console.log(result)
+                    if(result.success)
+                        console.log(this.files.splice(index, 1))
+                })
         },
     },
 }

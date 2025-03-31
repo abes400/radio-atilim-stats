@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
@@ -16,7 +16,7 @@ let window = null;
 //['delete_chart'];
 ipcMain.on('about', () => {
     app.showAboutPanel();
-})
+});
 
 ipcMain.on('save_chart', async (event, chartInfo, saveData) => {
     const fileName = infoToName(chartInfo);
@@ -26,14 +26,46 @@ ipcMain.on('save_chart', async (event, chartInfo, saveData) => {
     window.webContents.send('update_list', chartInfo);
 });
 
-ipcMain.handle('open_chart', async(event, chartInfo) => {
-    let fileContent = fs.readFileSync(path.join(filePath, infoToName(chartInfo)));
-    return fileContent;
-})
+ipcMain.handle('open_chart', async (event, chartInfo) => {
+    try {
+        let fileContent = fs.readFileSync(path.join(filePath, infoToName(chartInfo)));
+        return {success: true, data: fileContent};
+    } catch (e) {
+        return {success: false};
+    }
+});
 
 ipcMain.handle('fetch_list', async () => {
-    let fetchedListInfo = fs.readdirSync(filePath).map(fileName => nameToInfo(fileName));
-    return(fetchedListInfo);
+    try {
+        let fetchedListInfo = fs.readdirSync(filePath).map(fileName => nameToInfo(fileName));
+        return {success: true, data: fetchedListInfo};
+    } catch (e) {
+        return {success: false};
+    }
+});
+
+ipcMain.handle('delete_chart', async (event, chartInfo) => {
+    try {
+        let del = false;
+        await dialog.showMessageBox({
+            type: 'warning',
+            buttons: ['No', 'Yes'],
+            defaultId: 1,
+            cancelId: 0,
+            title: 'Delete chart',
+            message: 'Are you sure you want to delete this chart?',
+            detail: 'This action is irreversible.',
+            noLink: true,
+        }).then(selection => {
+            if(selection.response === 1) {
+                fs.unlinkSync(path.join(filePath, infoToName(chartInfo)))
+                del = true;
+            } 
+        });
+        return {success: del};
+    } catch(e) {
+        return {success: false};
+    }
 })
 
 const fetchData = async () => {
