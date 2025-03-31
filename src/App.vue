@@ -4,7 +4,7 @@
   <SplitterGroup direction="vertical">
     <SplitterPanel :min-size="49" class="card-splitter">
       <SplitterGroup direction="horizontal">
-        <SplitterPanel :min-size="33" class="card-splitter">
+        <SplitterPanel :min-size="38" class="card-splitter">
           <CurrentStat/>
         </SplitterPanel>
         <SplitterResizeHandle/>

@@ -7,7 +7,7 @@
                 Auto
             </button>
         </div> 
-        <strong>Now Playing: {{stat.songtitle}}</strong>
+        <strong>{{stat.songtitle.length <= 28 ? stat.songtitle : `${stat.songtitle.slice(0, 28)}...`}}</strong>
         <div class="pin-right">
             <button @click="manualFetch" v-if="!autoFetch">
                 Refresh
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+//28
 export default {
     data() {
         return {

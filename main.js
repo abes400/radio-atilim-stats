@@ -2,8 +2,8 @@ const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-//const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
-const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
+const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
+//const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
 
 const {version} = require('./package.json');
@@ -86,6 +86,7 @@ const fetchData = async () => {
     const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
     currentStat.time = time;
     currentStat.date = date;
+    if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
 
     window.webContents.send('new_stat', currentStat);
 
