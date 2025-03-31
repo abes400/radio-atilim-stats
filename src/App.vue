@@ -1,8 +1,6 @@
 <template>
-<div class="title-bar">
-  <img src="@/assets/logo.png">
-</div>
 <div class="homepage">
+  <TitleBar/>
   <SplitterGroup direction="vertical">
     <SplitterPanel :min-size="49" class="card-splitter">
       <SplitterGroup direction="horizontal">
@@ -28,6 +26,7 @@
 import CurrentStat from './components/CurrentStat.vue'
 import StatTimeline from './components/StatTimeline.vue'
 import SavedLogs from './components/SavedLogs.vue'
+import TitleBar from './components/TitleBar.vue'
 import {SplitterGroup, SplitterPanel, SplitterResizeHandle} from 'radix-vue';
 export default {
   name: 'app',
@@ -35,6 +34,7 @@ export default {
     CurrentStat,
     StatTimeline,
     SavedLogs,
+    TitleBar,
 
     SplitterGroup,
     SplitterPanel,
@@ -49,14 +49,4 @@ export default {
   width: calc(100vw - 10px);
   height: calc(100vh - 37px);
 }
-
-.title-bar {
-  width: 100%;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
 </style>

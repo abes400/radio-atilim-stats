@@ -63,6 +63,10 @@ const createWindow = () => {
         minHeight: 600,
         width: 1070,
         height: 700,
+        titleBarStyle: 'hidden',
+        ...(process.platform !== 'darwin' ? {titleBarOverlay: true} : {}),
+        trafficLightPosition: {x: 16, y: 12},
+
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
