@@ -60,7 +60,7 @@ export default {
     data() {
         return {
             details: true,
-            stat: {songtitle: '',
+            stat: {songtitle: 'Connecting...',
                    currentlisteners: '0',
                    peaklisteners: '0',
                    maxlisteners: '0',

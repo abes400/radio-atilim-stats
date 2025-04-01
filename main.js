@@ -2,9 +2,10 @@ const {app, BrowserWindow, Menu, ipcMain, dialog} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-//const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
-const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
+const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
+//const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
+const fetchIntervalMillisecond = 1000;
 
 const {version} = require('./package.json');
 
@@ -81,25 +82,33 @@ ipcMain.handle('toggle_auto', () => {
 
 // At some point I'm going to have to re-implement this function.
 const fetchData = async () => {
-    let response = await fetch(url);
-    let respJSON = await response.json()
-    let currentStat = {
-        songtitle: respJSON.songtitle,
-        currentlisteners: respJSON.currentlisteners,
-        peaklisteners: respJSON.peaklisteners,
-        maxlisteners: respJSON.maxlisteners,
-        uniquelisteners: respJSON.uniquelisteners,
-        averagetime: respJSON.averagetime
-    }
+    try {
+        let response = await fetch(url);
+        let respJSON = await response.json()
+        let currentStat = {
+            songtitle: respJSON.songtitle,
+            currentlisteners: respJSON.currentlisteners,
+            peaklisteners: respJSON.peaklisteners,
+            maxlisteners: respJSON.maxlisteners,
+            uniquelisteners: respJSON.uniquelisteners,
+            averagetime: respJSON.averagetime
+        }
+        
+        let timeInfo = new Date()
+        const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
+        const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
+        currentStat.time = time;
+        currentStat.date = date;
+        if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
     
-    let timeInfo = new Date()
-    const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
-    const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
-    currentStat.time = time;
-    currentStat.date = date;
-    if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
-
-    window.webContents.send('new_stat', currentStat);
+        if(window && window.webContents)
+            try { window.webContents.send('new_stat', currentStat); }
+            catch (e) { console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message) }
+         
+    } catch(e) {
+        console.warn("Warning:", e.message)
+    }
+       
 
     //currentStat = timeInfo = response = null;
 }
@@ -150,5 +159,6 @@ app.whenReady().then(() => {
         website: 'https://github.com/abes400'
     })
     createWindow();
-    setInterval(() => { if(autoFetch) fetchData() }, 1000);
+    fetchData();
+    setInterval(() => { if(autoFetch) fetchData() }, fetchIntervalMillisecond);
 });

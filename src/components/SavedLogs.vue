@@ -1,7 +1,7 @@
 <template>
 <div class="card">
     <div class="card-title">
-        <strong>Saved Logs</strong>
+        <strong>Saved Charts</strong>
     </div>
 
     <div class="pin-right">
