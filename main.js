@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, dialog} = require('electron');
+const {app, BrowserWindow, Menu, ipcMain, dialog} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
@@ -10,6 +10,8 @@ const {version} = require('./package.json');
 
 // TODO: Check the EIO dialog and try to fix it accordingly
 // ! To reprodue, keep the program open overnight with recording disabled
+
+Menu.setApplicationMenu(null); // Get rid of the application menu on both platforms
 
 let window = null;
 let autoFetch = true;

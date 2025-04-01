@@ -23,7 +23,6 @@
     </div>
 
     <div class="card-content">
-        <p>Status</p>
         <div class="primary centered-value">{{stat.currentlisteners}}</div>
         
         <div class="drawer pop-in">
