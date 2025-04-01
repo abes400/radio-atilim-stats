@@ -53,6 +53,7 @@ export default {
             statCount: 0,
             isRecording: true,
             recordBeginDate: '',
+            maxStatRecord: 120,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -86,14 +87,6 @@ export default {
             if(this.isRecording)
                 this.handleStat(new_stat);
         })
-    },
-
-    props: {
-        loggedStat: Object,
-        maxStatRecord: {
-            type: Number,
-            default: 15,
-        }
     },
 
     methods: {

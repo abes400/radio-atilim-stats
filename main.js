@@ -1,18 +1,20 @@
-const {app, BrowserWindow, Menu, ipcMain, dialog} = require('electron');
+const {app, BrowserWindow, Menu, ipcMain, dialog, powerSaveBlocker} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
 //const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
-const fetchIntervalMillisecond = 1000;
+const fetchIntervalMillisecond = 60000;
 
 const {version} = require('./package.json');
 
 // TODO: Check the EIO dialog and try to fix it accordingly
 // ! To reprodue, keep the program open overnight with recording disabled
 
+powerSaveBlocker.start('prevent-app-suspension'); // Prevent system to enter sleep mode
 Menu.setApplicationMenu(null); // Get rid of the application menu on both platforms
+
 
 let window = null;
 let autoFetch = true;
