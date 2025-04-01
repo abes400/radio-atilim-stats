@@ -1,6 +1,12 @@
 {
   "name": "radio-atilim-stats",
   "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Abes400",
+    "url": "https://github.com/abes400"
+  },
+  "description": "A simple application for Radio Atilim to monitor real-time statistics and plot them in a charts.",
   "private": true,
   "main": "main.js",
   "scripts": {
@@ -12,8 +18,21 @@
   },
   "build": {
     "appId": "radio-atilim-stat-monitor",
+    "productName": "Radio Atılım Stat Monitor",
+    "executableName": "Radio Atılım Stats",
     "dmg": {
-      "title": "Install Radio Atılım Stat Monitor"
+      "title": "${productName} ${version}",
+      "icon": "./build/installation/install.icns",
+      "background": "./build/installation/dmgbg.png"
+    },
+    "mac": {
+      "target": {
+        "target": "default",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
     }
   },
   "dependencies": {

@@ -157,7 +157,7 @@ app.whenReady().then(() => {
         applicationVersion: version,
         version: version,
         credits: 'Programming: Abes400',
-        copyright: 'Distributed under MIT License.',
+        copyright: 'Made for Atılım University Distributed under MIT License.',
         website: 'https://github.com/abes400'
     })
     createWindow();
