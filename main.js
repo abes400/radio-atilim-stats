@@ -148,7 +148,7 @@ const createWindow = () => {
         },
     });
 
-    window.loadFile('dist/index.html');
+    window.loadFile('dist_vue/index.html');
 }
 
 app.whenReady().then(() => {
