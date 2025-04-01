@@ -1,6 +1,9 @@
 <template>
   <div class="title-bar">
-    <img @dblclick="openAbout" src="@/assets/logo.png" style="-webkit-app-region: no-drag; user-drag: none;">
+    <img 
+      @dblclick="openAbout" src="@/assets/logo.png"
+      style="-webkit-app-region: no-drag; user-drag: none;"
+      v-tooltip.bottom="'Double-Click: About This Program'">
   </div>
 </template>
 

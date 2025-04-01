@@ -2,11 +2,14 @@
 <div class="card">
 <div class="card-title">
     <div class="pin-left">
-        <button @click="isRecording = !isRecording">
+        <button @click="isRecording = !isRecording" v-tooltip.bottom="isRecording ? 'Pause' : 'Record'">
             <font-awesome-icon v-if="!isRecording" icon="fa-solid fa-circle" />
             <font-awesome-icon v-else icon="fa-solid fa-pause"/>
         </button>
-        <button :disabled="!statCount" @click="saveChart(); clearChart(); this.renderTriggerKey = !this.renderTriggerKey"> 
+        <button 
+            :disabled="!statCount" 
+            @click="saveChart(); clearChart(); this.renderTriggerKey = !this.renderTriggerKey"
+            v-tooltip.bottom="'Save Chart'"> 
             <font-awesome-icon icon="fa-solid fa-download"/>
         </button>
     </div> 

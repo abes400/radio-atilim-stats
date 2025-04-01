@@ -2,14 +2,21 @@
 <div class="card"> 
     <div class="card-title">
         <div class="pin-left">
-            <button @click="toggleAutoFetch" 
-                :style="{'border-color': autoFetch ? '#3FB17F': '#00000000'}">
+            <button 
+                @click="toggleAutoFetch" 
+                :style="{'border-color': autoFetch ? '#3FB17F': '#00000000'}"
+                v-tooltip.bottom-start="'When enabled, it updates the current stat automatically.'">
                 Auto
             </button>
         </div> 
-        <strong>{{stat.songtitle.length <= 28 ? stat.songtitle : `${stat.songtitle.slice(0, 28)}...`}}</strong>
+        <strong v-tooltip.bottom='stat.songtitle'>
+            {{stat.songtitle.length <= 28 ? stat.songtitle : `${stat.songtitle.slice(0, 28)}...`}}
+        </strong>
         <div class="pin-right">
-            <button @click="manualFetch" v-if="!autoFetch">
+            <button 
+                @click="manualFetch"
+                v-tooltip.bottom="'Update the Current Stat'"
+                v-if="!autoFetch">
                 Refresh
             </button>
         </div> 
