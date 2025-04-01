@@ -17,7 +17,7 @@
                 @click="manualFetch"
                 v-tooltip.bottom="'Update the Current Stat'"
                 v-if="!autoFetch">
-                Refresh
+                <font-awesome-icon icon="fa-solid fa-refresh"/>
             </button>
         </div> 
     </div>
