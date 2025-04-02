@@ -1,4 +1,4 @@
-# radio-atilim-stats
+# Radio Atılım Statistics Monitor
 
 ## Project setup
 ```
