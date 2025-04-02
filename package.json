@@ -25,6 +25,18 @@
       "icon": "./build/installation/install.icns",
       "background": "./build/installation/dmgbg.png"
     },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "installerIcon": "./build/installation/install.ico",
+      "uninstallerIcon": "./build/uninstallation/uninstall.ico",
+      "uninstallDisplayName": "Uninstall Radio Atılım Stats Monitor",
+      "license": "LICENSE",
+      "allowToChangeInstallationDirectory": true,
+      "installerSidebar": "./build/installation/installSidebar.bmp",
+      "uninstallerSidebar": "./build/installation/installSidebar.bmp",
+      "deleteAppDataOnUninstall": true
+    },
     "mac": {
       "target": {
         "target": "default",
@@ -33,6 +45,10 @@
           "arm64"
         ]
       }
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": ""
     }
   },
   "dependencies": {
