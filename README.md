@@ -1,5 +1,6 @@
 # Radio Atılım Statistics Monitor
 
+![Screenshot of GUI](./build/Example_GUI.png)
 ## Project setup
 ```
 npm install
