@@ -82,34 +82,51 @@ ipcMain.handle('toggle_auto', () => {
     return autoFetch;
 });
 
+const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // At some point I'm going to have to re-implement this function.
 const fetchData = async () => {
-    try {
-        let response = await fetch(url);
-        let respJSON = await response.json()
-        let currentStat = {
-            songtitle: respJSON.songtitle,
-            currentlisteners: respJSON.currentlisteners,
-            peaklisteners: respJSON.peaklisteners,
-            maxlisteners: respJSON.maxlisteners,
-            uniquelisteners: respJSON.uniquelisteners,
-            averagetime: respJSON.averagetime
+    let fetchSuccessful = false;
+    let response;
+    while(!fetchSuccessful) {
+        try {
+            response = await fetch(url);
+            if(response.ok) 
+                fetchSuccessful = true;
+            else {
+                console.warn("Warning: promise resolved but something went wrong.")
+                fetchSuccessful = false;
+            }
+        } catch (e) {
+            console.warn("Waring: ", e.message)
+            fetchSuccessful = false;
         }
-        
-        let timeInfo = new Date()
-        const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
-        const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
-        currentStat.time = time;
-        currentStat.date = date;
-        if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
-    
-        if(window && window.webContents)
-            try { window.webContents.send('new_stat', currentStat); }
-            catch (e) { console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message) }
-         
-    } catch(e) {
-        console.warn("Warning:", e.message)
+        await sleep(1000);
     }
+    
+    let respJSON = await response.json()
+    let currentStat = {
+        songtitle: respJSON.songtitle,
+        currentlisteners: respJSON.currentlisteners,
+        peaklisteners: respJSON.peaklisteners,
+        maxlisteners: respJSON.maxlisteners,
+        uniquelisteners: respJSON.uniquelisteners,
+        averagetime: respJSON.averagetime
+    }
+    
+    let timeInfo = new Date()
+    const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
+    const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
+    currentStat.time = time;
+    currentStat.date = date;
+    if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
+
+    if(window && window.webContents)
+        try { window.webContents.send('new_stat', currentStat); }
+        catch (e) { console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message) }
+         
        
 
     //currentStat = timeInfo = response = null;
