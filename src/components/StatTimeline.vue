@@ -83,7 +83,7 @@ export default {
         }
     },
     mounted() {
-        window.ipc.on('new_stat', (new_stat) => {
+        window.ipc.on('new_stat_timeline', (new_stat) => {
             if(this.isRecording)
                 this.handleStat(new_stat);
         })

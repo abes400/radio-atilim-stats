@@ -2,10 +2,12 @@ const {app, BrowserWindow, Menu, ipcMain, dialog, powerSaveBlocker} = require('e
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
-//const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
+const winTitle = 'Radio Atılım Statistics Monitor';
+//const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
+const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
-const fetchIntervalMillisecond = 60000;
+const fetchIntervalMillisecond = 10000;
+const dont_handle_timeline_until = 6;
 
 const {version} = require('./package.json');
 
@@ -18,6 +20,8 @@ Menu.setApplicationMenu(null); // Get rid of the application menu on both platfo
 
 let window = null;
 let autoFetch = true;
+let del_show = false;
+let stat_count = -1;
 
 ipcMain.on('about', () => {
     app.showAboutPanel();
@@ -29,6 +33,7 @@ ipcMain.on('save_chart', async (event, chartInfo, saveData) => {
         fs.mkdirSync(filePath, {recursive: true});
     fs.writeFileSync(path.join(filePath, fileName), saveData);
     window.webContents.send('update_list', chartInfo);
+    stat_count = -1;
 });
 
 ipcMain.on('fetch',  () => {
@@ -54,27 +59,34 @@ ipcMain.handle('fetch_list', async () => {
 });
 
 ipcMain.handle('delete_chart', async (event, chartInfo) => {
-    try {
-        let del = false;
-        await dialog.showMessageBox({
-            type: 'warning',
-            buttons: ['No', 'Yes'],
-            defaultId: 1,
-            cancelId: 0,
-            title: 'Delete chart',
-            message: 'Are you sure you want to delete this chart?',
-            detail: 'This action is irreversible.',
-            noLink: true,
-        }).then(selection => {
-            if(selection.response === 1) {
-                fs.unlinkSync(path.join(filePath, infoToName(chartInfo)))
-                del = true;
-            } 
-        });
-        return {success: del};
-    } catch(e) {
-        return {success: false};
+    console.log(del_show);
+    if(!del_show) {
+        del_show = true;
+        try {
+            let del = false;
+            await dialog.showMessageBox({
+                type: 'warning',
+                buttons: ['No', 'Yes'],
+                defaultId: 1,
+                cancelId: 0,
+                title: 'Delete chart',
+                message: 'Are you sure you want to delete this chart?',
+                detail: 'This action is irreversible.',
+                noLink: true,
+            }).then(selection => {
+                if(selection.response === 1) {
+                    fs.unlinkSync(path.join(filePath, infoToName(chartInfo)))
+                    del = true;
+                }
+                del_show = false; 
+                console.log("Selection made.");
+            });
+            return {success: del};
+        } catch(e) {
+            return {success: false};
+        }
     }
+    
 });
 
 ipcMain.handle('toggle_auto', () => {
@@ -90,45 +102,53 @@ const sleep = (ms) => {
 const fetchData = async () => {
     let fetchSuccessful = false;
     let response;
-    while(!fetchSuccessful) {
-        try {
-            response = await fetch(url);
-            if(response.ok) 
-                fetchSuccessful = true;
-            else {
-                console.warn("Warning: promise resolved but something went wrong.")
-                fetchSuccessful = false;
-            }
-        } catch (e) {
-            console.warn("Waring: ", e.message)
+
+    try {
+        response = await fetch(url);
+        if(response.ok) {
+            fetchSuccessful = true;
+        }
+        else {
+            console.warn("Warning: promise resolved but something went wrong.");
             fetchSuccessful = false;
         }
-        await sleep(1000);
+    } catch (e) {
+        console.warn("Warning: ", e.message)
+        fetchSuccessful = false;
     }
-    
-    let respJSON = await response.json()
-    let currentStat = {
-        songtitle: respJSON.songtitle,
-        currentlisteners: respJSON.currentlisteners,
-        peaklisteners: respJSON.peaklisteners,
-        maxlisteners: respJSON.maxlisteners,
-        uniquelisteners: respJSON.uniquelisteners,
-        averagetime: respJSON.averagetime
+
+    if(fetchSuccessful) {
+
+        stat_count++;
+        
+        let respJSON = await response.json()
+        let currentStat = {
+            songtitle: respJSON.songtitle,
+            currentlisteners: respJSON.currentlisteners,
+            peaklisteners: respJSON.peaklisteners,
+            maxlisteners: respJSON.maxlisteners,
+            uniquelisteners: respJSON.uniquelisteners,
+            averagetime: respJSON.averagetime
+        }
+        
+        let timeInfo = new Date()
+        const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
+        const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
+        currentStat.time = time;
+        currentStat.date = date;
+        if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
+
+        if(window && window.webContents)
+            try {
+                window.webContents.send('new_stat', currentStat);
+                if(!autoFetch || stat_count >= dont_handle_timeline_until || stat_count == 0) {
+                    window.webContents.send('new_stat_timeline', currentStat);
+                    stat_count = 0;
+                }
+                console.log(stat_count);
+            }
+            catch (e) { console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message) }
     }
-    
-    let timeInfo = new Date()
-    const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
-    const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
-    currentStat.time = time;
-    currentStat.date = date;
-    if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
-
-    if(window && window.webContents)
-        try { window.webContents.send('new_stat', currentStat); }
-        catch (e) { console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message) }
-         
-       
-
     //currentStat = timeInfo = response = null;
 }
 
@@ -166,6 +186,7 @@ const createWindow = () => {
     });
 
     window.loadFile('dist_vue/index.html');
+    window.webContents.on('did-finish-load', () => window.setTitle(winTitle));
 }
 
 app.whenReady().then(() => {
@@ -174,9 +195,9 @@ app.whenReady().then(() => {
         applicationVersion: version,
         version: version,
         credits: 'Programming: Abes400',
-        copyright: 'Made for Atılım University Distributed under MIT License.',
-        website: 'https://github.com/abes400'
-    })
+        copyright: 'Made for Atılım University. \nDistributed under MIT License.',
+        website: 'https://github.com/abes400',
+    });
     createWindow();
     fetchData();
     setInterval(() => { if(autoFetch) fetchData() }, fetchIntervalMillisecond);
