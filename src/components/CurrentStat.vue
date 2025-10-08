@@ -9,7 +9,9 @@
                 Auto
             </button>
         </div> 
-        <strong v-tooltip.bottom='stat.songtitle'>
+        <strong
+            @dblclick="listenNow()"
+            v-tooltip.bottom='`${stat.songtitle} [Double click to listen]`'>
             {{stat.songtitle.length <= 28 ? stat.songtitle : `${stat.songtitle.slice(0, 28)}...`}}
         </strong>
         <div class="pin-right">
@@ -86,6 +88,9 @@ export default {
         },
         manualFetch() {
             window.ipc.send('fetch');
+        },
+        listenNow() {
+            window.ipc.send('listen');
         }
     }
 }

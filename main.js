@@ -1,10 +1,11 @@
-const {app, BrowserWindow, Menu, ipcMain, dialog, powerSaveBlocker} = require('electron');
+const {app, BrowserWindow, Menu, ipcMain, dialog, powerSaveBlocker, shell} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const winTitle = 'Radio Atılım Statistics Monitor';
-//const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
-const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
+const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
+//const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466';
+const listenurl = 'http://www.radioatilim.com';
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
 const fetchIntervalMillisecond = 10000;
 const dont_handle_timeline_until = 6;
@@ -23,9 +24,7 @@ let autoFetch = true;
 let del_show = false;
 let stat_count = -1;
 
-ipcMain.on('about', () => {
-    app.showAboutPanel();
-});
+ipcMain.on('about', () => { app.showAboutPanel(); });
 
 ipcMain.on('save_chart', async (event, chartInfo, saveData) => {
     const fileName = infoToName(chartInfo);
@@ -36,8 +35,11 @@ ipcMain.on('save_chart', async (event, chartInfo, saveData) => {
     stat_count = -1;
 });
 
-ipcMain.on('fetch',  () => {
-    fetchData();
+ipcMain.on('fetch',  () => { fetchData(); });
+
+ipcMain.on('listen', (event) => {
+    event.preventDefault();
+    shell.openExternal(listenurl);
 });
 
 ipcMain.handle('open_chart', async (event, chartInfo) => {
