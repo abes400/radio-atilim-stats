@@ -28,10 +28,10 @@
                     <strong>{{file.startTime}} - {{file.endTime}}</strong>
                </div>
                <div class="pin-right" style="right: 5px">
-                    <button @click="deleteChart(index)" v-tooltip="'Delete Chart'">
+                    <button @click="deleteChart(index)" title="Delete Chart">
                         <font-awesome-icon icon="fa-solid fa-trash"/>
                     </button>
-                    <button @click="openChart(index)" v-tooltip="'Open Chart'">
+                    <button @click="openChart(index)" title="Open Chart">
                         <font-awesome-icon icon="fa-solid fa-eye"/>
                     </button>
                </div>
