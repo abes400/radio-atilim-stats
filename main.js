@@ -2,7 +2,6 @@ const {app, BrowserWindow, Menu, ipcMain, dialog, powerSaveBlocker} = require('e
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-const readdirClean = require('readdir-clean');
 const winTitle = 'Radio Atılım Statistics Monitor';
 //const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
 const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466'
@@ -52,8 +51,7 @@ ipcMain.handle('open_chart', async (event, chartInfo) => {
 
 ipcMain.handle('fetch_list', async () => {
     try {
-        let fileList = await readdirClean(filePath);
-        let fetchedListInfo = fileList.map(fileName => nameToInfo(fileName));
+        let fetchedListInfo = fs.readdirSync(filePath).map(fileName => nameToInfo(fileName));
         return {success: true, data: fetchedListInfo};
     } catch (e) {
         return {success: false};
