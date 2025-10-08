@@ -5,7 +5,7 @@
             <button 
                 @click="toggleAutoFetch" 
                 :style="{'border-color': autoFetch ? '#3FB17F': '#00000000'}"
-                v-tooltip.bottom-start="'When enabled, it updates the current stat every minute.'">
+                v-tooltip.bottom-start="'When enabled, it updates the current stat automatically.'">
                 Auto
             </button>
         </div> 
