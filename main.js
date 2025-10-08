@@ -51,7 +51,9 @@ ipcMain.handle('open_chart', async (event, chartInfo) => {
 
 ipcMain.handle('fetch_list', async () => {
     try {
-        let fetchedListInfo = fs.readdirSync(filePath).map(fileName => nameToInfo(fileName));
+        let fetchedListInfo = fs.readdirSync(filePath)
+            .filter(fileName => fileName.endsWith('.stat'))
+            .map(fileName => nameToInfo(fileName));
         return {success: true, data: fetchedListInfo};
     } catch (e) {
         return {success: false};
