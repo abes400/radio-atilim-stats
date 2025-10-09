@@ -18,6 +18,9 @@
     </div>
     <div class="right-side pin-right">
         <div class="card-title">
+            <strong class="pin-left" style="padding-left: 15px;">
+                {{ date ? date : 'No chart selected.' }}
+            </strong>
             <div class="pin-right">
                 <button @click="toggleChartDataset(0)" 
                     :style="{'border-color': data.datasets[0].hidden ? '#00000000': '#3FB17F'}">
@@ -75,6 +78,7 @@ export default {
                 plugins: { legend: { display: false, } }
             },
             data: structuredClone(chartData),
+            date: null,
             renderTriggerKey: false,
         }
     },
@@ -115,8 +119,9 @@ export default {
                         this.data.labels = newData[0];
                         newData[1].forEach((dataset, index) => {
                             this.data.datasets[index].data = dataset
-                        })
-                        this.renderTriggerKey = !this.renderTriggerKey
+                        });
+                        this.renderTriggerKey = !this.renderTriggerKey;
+                        this.date = this.files[index].beginDate;
                     } 
                     // TODO: add else condition handling 
                 })

@@ -5,6 +5,7 @@ const os = require('os');
 
 const winTitle = 'Radio Atılım Statistics Monitor';
 const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
+//const url = 'https://stream3.radyoodtu.com.tr:8000/statistics?sid=1&json=1';
 //const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466';
 const listenurl = 'http://www.radioatilim.com';
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
