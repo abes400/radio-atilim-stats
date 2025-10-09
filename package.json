@@ -14,7 +14,8 @@
     "build": "vue-cli-service build && electron .",
     "buildWeb": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "dist": "vue-cli-service build && electron-builder"
+    "dist-mac": "vue-cli-service build && electron-builder --mac",
+    "dist-win": "vue-cli-service build && electron-builder --win --x64"
   },
   "build": {
     "appId": "radio-atilim-stat-monitor",

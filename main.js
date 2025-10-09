@@ -2,6 +2,7 @@ const {app, BrowserWindow, Menu, ipcMain, dialog, powerSaveBlocker, shell} = req
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+
 const winTitle = 'Radio Atılım Statistics Monitor';
 const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
 //const url = 'http://shoutcast.radyogrup.com:1010/statistics?sid=1&json=1&_=1732930231466';
@@ -21,8 +22,8 @@ Menu.setApplicationMenu(null); // Get rid of the application menu on both platfo
 
 let window = null;
 let autoFetch = true;
-let del_show = false;
 let stat_count = -1;
+let first_fetch = false;
 
 ipcMain.on('about', () => { app.showAboutPanel(); });
 
@@ -63,12 +64,10 @@ ipcMain.handle('fetch_list', async () => {
 });
 
 ipcMain.handle('delete_chart', async (event, chartInfo) => {
-    console.log(del_show);
-    if(!del_show) {
-        del_show = true;
-        try {
-            let del = false;
-            await dialog.showMessageBox({
+    try {
+        let del = false;
+        await dialog.showMessageBox(
+            window, {
                 type: 'warning',
                 buttons: ['No', 'Yes'],
                 defaultId: 1,
@@ -78,19 +77,13 @@ ipcMain.handle('delete_chart', async (event, chartInfo) => {
                 detail: 'This action is irreversible.',
                 noLink: true,
             }).then(selection => {
-                if(selection.response === 1) {
-                    fs.unlinkSync(path.join(filePath, infoToName(chartInfo)))
-                    del = true;
-                }
-                del_show = false; 
-                console.log("Selection made.");
-            });
-            return {success: del};
-        } catch(e) {
-            return {success: false};
-        }
-    }
-    
+            if (selection.response === 1) {
+                fs.unlinkSync(path.join(filePath, infoToName(chartInfo)))
+                del = true;
+            }
+        });
+        return { success: del };
+    } catch (e) { return { success: false }; }
 });
 
 ipcMain.handle('toggle_auto', () => {
@@ -194,7 +187,8 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-    app.setAboutPanelOptions({
+    app.setAboutPanelOptions(
+        {
         applicationName: 'Radio Atılım Statistics Monitor',
         applicationVersion: version,
         version: version,
