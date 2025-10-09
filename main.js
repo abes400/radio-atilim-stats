@@ -144,7 +144,6 @@ const fetchData = async () => {
                     window.webContents.send('new_stat_timeline', currentStat);
                     stat_count = 0;
                 }
-                console.log(stat_count);
             }
             catch (e) { console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message) }
     }
