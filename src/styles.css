@@ -37,9 +37,15 @@ button:active { box-shadow: -1px -1px 3px inset var(--shadow-bright), inset 1px 
 
 ::-webkit-scrollbar { width: 7px;}
 
-::-webkit-scrollbar-thumb { background-color: var(--shadow-bright); }
+::-webkit-scrollbar-thumb { 
+    background-color: var(--shadow-bright);
+    border-radius: 5px;
+}
 
-::-webkit-scrollbar-track { background-color: var(--outline); }
+::-webkit-scrollbar-track { 
+    border-radius: 5px;
+    margin: 2px;
+}
 
 .pop-out {
     box-shadow: -2px -2px 7px var(--shadow-bright), 2px 2px 7px var(--shadow-dark);

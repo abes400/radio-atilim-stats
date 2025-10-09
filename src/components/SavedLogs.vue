@@ -1,47 +1,45 @@
 <template>
 <div class="card">
-    <div class="card-title">
-        <strong>Saved Charts</strong>
-    </div>
-
-    <div class="pin-right">
-        <button @click="toggleChartDataset(0)" 
-            :style="{'border-color': data.datasets[0].hidden ? '#00000000': '#3FB17F'}">
-            Current Listeners
-        </button>
-        <button @click="toggleChartDataset(1)" 
-            :style="{'border-color': data.datasets[1].hidden ? '#00000000' : '#337EC9' }">
-            Unique Listeners
-        </button>
-        <button @click="toggleChartDataset(2)" 
-            :style="{'border-color': data.datasets[2].hidden ? '#00000000' : '#FF9D00'}">
-            Avg. Listen Time
-        </button>
-    </div> 
-
-    <div class="card-content" >
-
-        <div class="list-container pin-left">
-            <div v-for="(file, index) in files" :key="file" class="list-item">
-               <div>
-                    <div>{{file.beginDate}}</div>
-                    <strong>{{file.startTime}} - {{file.endTime}}</strong>
-               </div>
-               <div class="pin-right" style="right: 5px">
-                    <button @click="deleteChart(index)" title="Delete Chart">
-                        <font-awesome-icon icon="fa-solid fa-trash"/>
-                    </button>
-                    <button @click="openChart(index)" title="Open Chart">
-                        <font-awesome-icon icon="fa-solid fa-eye"/>
-                    </button>
-               </div>
+    <div class="list-container pin-left">
+        <div v-for="(file, index) in files" :key="file" class="list-item">
+            <div>
+                <div>{{file.beginDate}}</div>
+                <strong>{{file.startTime}} - {{file.endTime}}</strong>
+            </div>
+            <div class="pin-right" style="right: 5px">
+                <button @click="deleteChart(index)" title="Delete Chart">
+                    <font-awesome-icon icon="fa-solid fa-trash"/>
+                </button>
+                <button @click="openChart(index)" title="Open Chart">
+                    <font-awesome-icon icon="fa-solid fa-eye"/>
+                </button>
             </div>
         </div>
-
-        <div class="timeline-container pop-in pin-right">
-            <chart :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+    </div>
+    <div class="right-side pin-right">
+        <div class="card-title">
+            <div class="pin-right">
+                <button @click="toggleChartDataset(0)" 
+                    :style="{'border-color': data.datasets[0].hidden ? '#00000000': '#3FB17F'}">
+                    Current Listeners
+                </button>
+                <button @click="toggleChartDataset(1)" 
+                    :style="{'border-color': data.datasets[1].hidden ? '#00000000' : '#337EC9' }">
+                    Unique Listeners
+                </button>
+                <button @click="toggleChartDataset(2)" 
+                    :style="{'border-color': data.datasets[2].hidden ? '#00000000' : '#FF9D00'}">
+                    Avg. Listen Time
+                </button>
+            </div> 
         </div>
 
+        <div class="card-content" >
+
+            <div class="timeline-container pop-in pin-right">
+                <chart :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
+            </div>
+        </div>
     </div>
 </div>
 </template>
@@ -138,15 +136,20 @@ export default {
 
 <style scoped>
 .list-container {
-    height: calc(100% - 42px);
+    height: 100%;
     border-right: solid 1px #282828;
     width: 270px;
 }
 
 .timeline-container {
     height: calc(100% - 70px);
-    width: calc(100% - 300px);
+    width: calc(100% - 30px);
     right: 15px !important;
+}
+
+.right-side {
+    width: calc(100% - 270px);
+    height: 100%;
 }
 
 </style>
