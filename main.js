@@ -56,7 +56,9 @@ ipcMain.handle('fetch_list', async () => {
     try {
         let fetchedListInfo = fs.readdirSync(filePath)
             .filter(fileName => fileName.endsWith('.stat'))
-            .map(fileName => nameToInfo(fileName));
+            .map(fileName => nameToInfo(fileName))
+            .sort()
+            .reverse();
         return {success: true, data: fetchedListInfo};
     } catch (e) {
         return {success: false};

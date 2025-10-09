@@ -81,7 +81,7 @@ export default {
 
     mounted() {
         window.ipc.on('update_list', (chartInfo) => {
-            this.files.push(chartInfo);
+            this.files.unshift(chartInfo);
         })
 
         window.ipc.invoke('fetch_list')
