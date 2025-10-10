@@ -9,11 +9,18 @@
                 Auto
             </button>
         </div> 
-        <strong
+        <div 
+            class="song-info"
             @dblclick="listenNow()"
-            v-tooltip.bottom='`${stat.songtitle} [Double click to listen]`'>
-            {{stat.songtitle.length <= 28 ? stat.songtitle : `${stat.songtitle.slice(0, 28)}...`}}
-        </strong>
+            v-tooltip.bottom="'Double click to listen'">
+            <strong>
+                {{stat.songtitle.length <= 28 ? stat.songtitle : `${stat.songtitle.slice(0, 28)}...`}}
+            </strong>
+            <div class="mini-title">
+                {{stat.songartist.length <= 50 ? stat.songartist : `${stat.songartist.slice(0, 50)}...`}}
+            </div>
+        </div>
+
         <div class="pin-right">
             <button 
                 @click="manualFetch"
@@ -25,7 +32,11 @@
     </div>
 
     <div class="card-content">
-        <div class="primary centered-value">{{stat.currentlisteners}}</div>
+
+        <p class="mini-title">Current Listeners</p>
+        <div class="primary centered-value">
+            {{stat.currentlisteners}}
+        </div>
         
         <div class="drawer pop-in">
             <button class="drawer-button pin-bottom" @click="details = !this.details">
@@ -63,6 +74,7 @@ export default {
         return {
             details: true,
             stat: {songtitle: 'Connecting...',
+                   songartist: '',
                    currentlisteners: '0',
                    peaklisteners: '0',
                    maxlisteners: '0',
@@ -106,7 +118,6 @@ export default {
     flex: 1;
 }
 
-
 .drawer-content{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -115,8 +126,16 @@ export default {
     font-size: 7pt;
 }
 
-.pop-in{
-   padding: 0 ; 
+.pop-in{ padding: 0 ; }
+
+.mini-title { font-size: 8pt; }
+
+.song-info{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 </style>

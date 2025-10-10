@@ -26,10 +26,6 @@ button{
     border-radius: 17px;
 }
 
-p {
-    line-height: 1px;
-    font-size: 10pt;
-}
 
 button:hover { filter: brightness(120%); }
 

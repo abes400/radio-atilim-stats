@@ -24,7 +24,6 @@ Menu.setApplicationMenu(null); // Get rid of the application menu on both platfo
 let window = null;
 let autoFetch = true;
 let stat_count = -1;
-let first_fetch = false;
 
 ipcMain.on('about', () => { app.showAboutPanel(); });
 
@@ -121,9 +120,11 @@ const fetchData = async () => {
 
         stat_count++;
         
-        let respJSON = await response.json()
+        const respJSON = await response.json()
+        const [songArtist, songTitle] = respJSON.songtitle.split(' - ');
         let currentStat = {
-            songtitle: respJSON.songtitle,
+            songartist: songArtist,
+            songtitle: songTitle,
             currentlisteners: respJSON.currentlisteners,
             peaklisteners: respJSON.peaklisteners,
             maxlisteners: respJSON.maxlisteners,
