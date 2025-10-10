@@ -120,8 +120,14 @@ const fetchData = async () => {
 
         stat_count++;
         
-        const respJSON = await response.json()
-        const [songArtist, songTitle] = respJSON.songtitle.split(' - ');
+        const respJSON = await response.json();
+        let songArtist, songTitle;
+        try {
+            [songArtist, songTitle] = respJSON.songtitle.split(' - ');
+        } catch(e) {
+            songTitle = respJSON.songtitle;
+            songArtist = "Unknown";
+        }
         let currentStat = {
             songartist: songArtist,
             songtitle: songTitle,

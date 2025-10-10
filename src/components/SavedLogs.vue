@@ -1,6 +1,12 @@
 <template>
 <div class="card">
     <div class="list-container pin-left">
+        <div v-if="files.length == 0" class="list-item">
+            <p class="med-title">
+                You don't have any saved chart yet. <br><br>
+                Click <font-awesome-icon icon="fa-solid fa-download"/> to save your first chart.
+            </p>
+        </div>
         <div v-for="(file, index) in files" :key="file" class="list-item">
             <div>
                 <div>{{file.beginDate}}</div>
@@ -19,7 +25,7 @@
     <div class="right-side pin-right">
         <div class="card-title">
             <strong class="pin-left" style="padding-left: 15px;">
-                {{ date ? date : 'No chart selected.' }}
+                {{ date ? date : 'Select a chart from the left.' }}
             </strong>
             <div class="pin-right">
                 <button @click="toggleChartDataset(0)" 

@@ -43,6 +43,9 @@ button:active { box-shadow: -1px -1px 3px inset var(--shadow-bright), inset 1px 
     margin: 2px;
 }
 
+.mini-title { font-size: 8pt; }
+.med-title { font-size: 10pt; }
+
 .pop-out {
     box-shadow: -2px -2px 7px var(--shadow-bright), 2px 2px 7px var(--shadow-dark);
     border-radius: 5px;

@@ -74,7 +74,7 @@ export default {
         return {
             details: true,
             stat: {songtitle: 'Connecting...',
-                   songartist: '',
+                   songartist: 'Please wait...',
                    currentlisteners: '0',
                    peaklisteners: '0',
                    maxlisteners: '0',
@@ -127,8 +127,6 @@ export default {
 }
 
 .pop-in{ padding: 0 ; }
-
-.mini-title { font-size: 8pt; }
 
 .song-info{
     height: 100%;
