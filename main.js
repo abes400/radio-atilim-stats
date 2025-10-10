@@ -93,10 +93,6 @@ ipcMain.handle('toggle_auto', () => {
     return autoFetch;
 });
 
-const sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 // At some point I'm going to have to re-implement this function.
 const fetchData = async () => {
     let fetchSuccessful = false;
