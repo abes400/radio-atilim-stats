@@ -90,8 +90,11 @@ ipcMain.handle('delete_chart', async (event, chartInfo) => {
 
 ipcMain.handle('toggle_auto', () => {
     autoFetch = !autoFetch;
+    stat_count = -1;
     return autoFetch;
 });
+
+const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 // At some point I'm going to have to re-implement this function.
 const fetchData = async () => {
@@ -100,6 +103,7 @@ const fetchData = async () => {
 
     try {
         response = await fetch(url);
+        console.log("Fetching: Try " + stat_count)
         if(response.ok) {
             fetchSuccessful = true;
         }
