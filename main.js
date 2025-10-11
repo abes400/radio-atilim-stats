@@ -2,6 +2,7 @@ const {app, BrowserWindow, Menu, ipcMain, dialog, powerSaveBlocker, shell} = req
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const offset = 2;
 
 const winTitle = 'Radio Atılım Statistics Monitor';
 const url = 'https://cros9.yayin.com.tr/https://radyoatilim.yayin.com.tr/stats?sid=1&json=1';
@@ -133,10 +134,10 @@ const fetchData = async () => {
         success: true,
         songartist: songArtist,
         songtitle: songTitle,
-        currentlisteners: respJSON.currentlisteners,
+        currentlisteners: respJSON.currentlisteners - offset,
         peaklisteners: respJSON.peaklisteners,
         maxlisteners: respJSON.maxlisteners,
-        uniquelisteners: respJSON.uniquelisteners,
+        uniquelisteners: respJSON.uniquelisteners - offset,
         averagetime: respJSON.averagetime
     }
     
