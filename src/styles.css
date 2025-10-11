@@ -27,9 +27,10 @@ button{
 }
 
 
-button:hover { filter: brightness(120%); }
+button:hover:enabled { filter: brightness(120%); }
 
-button:active { box-shadow: -1px -1px 3px inset var(--shadow-bright), inset 1px 1px 3px var(--shadow-dark); }
+button:active:enabled { box-shadow: -1px -1px 3px inset var(--shadow-bright), inset 1px 1px 3px var(--shadow-dark); }
+button:disabled { filter: opacity(30%); }
 
 ::-webkit-scrollbar { width: 7px;}
 

@@ -23,8 +23,8 @@
         </div>
     </div>
     <div class="right-side pin-right">
-        <div v-if="date" class="card-title">
-            <div class="pin-left">
+        <div class="card-title">
+            <div v-if="date" class="pin-left">
                 <button
                     style="margin-left: 15px;"
                     v-tooltip.bottom="'Close chart'"
@@ -33,25 +33,28 @@
                 </button>
                 <strong style="padding-left: 5px;">{{ date }}</strong>
             </div>
+            <div v-else class="pin-left">
+                <strong style="padding-left: 15px;">
+                    Select a chart from the left.
+                </strong>
+            </div>
             <div class="pin-right">
                 <button @click="toggleChartDataset(0)" 
+                    :disabled="!date"
                     :style="{'border-color': data.datasets[0].hidden ? '#00000000': '#3FB17F'}">
                     Current Listeners
                 </button>
                 <button @click="toggleChartDataset(1)" 
+                    :disabled="!date"
                     :style="{'border-color': data.datasets[1].hidden ? '#00000000' : '#337EC9' }">
                     Unique Listeners
                 </button>
                 <button @click="toggleChartDataset(2)" 
+                    :disabled="!date"
                     :style="{'border-color': data.datasets[2].hidden ? '#00000000' : '#FF9D00'}">
                     Avg. Listen Time
                 </button>
             </div> 
-        </div>
-        <div v-else class="card-title">
-            <strong class="pin-left" style="padding-left: 15px;">
-                Select a chart from the left.
-            </strong>
         </div>
 
         <div class="card-content" >
@@ -89,7 +92,7 @@ export default {
                     
                 },
 
-                interaction: { mode: 'index' },
+                interaction: { mode: 'index', intersect: false },
 
                 plugins: { legend: { display: false, } }
             },
