@@ -9,15 +9,17 @@
                 Auto
             </button>
         </div> 
-        <div 
-            class="song-info"
-            @dblclick="listenNow()"
-            v-tooltip.bottom="'Double click to listen'">
-            <strong>
-                {{stat.songtitle.length <= 28 ? stat.songtitle : `${stat.songtitle.slice(0, 28)}...`}}
-            </strong>
-            <div class="mini-title">
-                {{stat.songartist.length <= 50 ? stat.songartist : `${stat.songartist.slice(0, 50)}...`}}
+
+        <div class="song-info-container" v-tooltip.bottom="'Double-click to listen'" @dblclick="listenNow">
+            <div>
+                <Vue3Marquee :animate-on-overflow-only="true" :pause-on-hover="true">
+                    <strong class="title"> &#8205; &#8205; {{ stat.songtitle }}  &#8205; &#8205; </strong>
+                </Vue3Marquee>
+            </div>
+            <div>
+                <Vue3Marquee :animate-on-overflow-only="true" :pause-on-hover="true">
+                    <div class="title mini-title"> &#8205; &#8205; {{ stat.songartist }} &#8205; &#8205; </div>
+                </Vue3Marquee>
             </div>
         </div>
 
@@ -68,7 +70,6 @@
 </template>
 
 <script>
-//28
 export default {
     data() {
         return {
@@ -90,8 +91,8 @@ export default {
             if(new_stat.success)
                 this.stat = new_stat;
             else {
-                this.stat.songtitle = `Fetch failed - Retrying...`
-                this.stat.songartist = "Last fetch:"
+                this.stat.songtitle = "Connection lost - Trying again..."
+                this.stat.songartist = "Last fetch can be seen below:"
             }
         })
     },
@@ -133,12 +134,13 @@ export default {
 
 .pop-in{ padding: 0 ; }
 
-.song-info{
-    height: 100%;
+.song-info-container {
+    width: calc(100% - 125px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
+
+.title { text-align: center; }
 
 </style>

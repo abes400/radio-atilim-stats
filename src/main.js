@@ -6,6 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircle, faPause, faDownload, faEye, faTrash, faCaretUp, faCaretDown, faRefresh, faClose, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import FloatingVue from 'floating-vue'
+import Vue3Marquee from 'vue3-marquee'
 
 import "./styles.css"; // Import the main stylesheet
 import 'floating-vue/dist/style.css' // Import the default style for the tooltips
@@ -17,6 +18,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarEleme
 
 createApp(App)
     .use(FloatingVue)
+    .use(Vue3Marquee)
     .component('chart', Line)
     .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app')
