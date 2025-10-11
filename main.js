@@ -96,65 +96,76 @@ ipcMain.handle('toggle_auto', () => {
 
 const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
+
+
 // At some point I'm going to have to re-implement this function.
 const fetchData = async () => {
     let fetchSuccessful = false;
     let response;
 
-    try {
-        response = await fetch(url);
-        console.log("Fetching: Try " + stat_count)
-        if(response.ok) {
-            fetchSuccessful = true;
-        }
-        else {
-            console.warn("Warning: promise resolved but something went wrong.");
-            fetchSuccessful = false;
-        }
-    } catch (e) {
-        console.warn("Warning: ", e.message)
-        fetchSuccessful = false;
-    }
-
-    if(fetchSuccessful) {
-
-        stat_count++;
-        
-        const respJSON = await response.json();
-        let songArtist, songTitle;
+    while(!fetchSuccessful){
         try {
-            [songArtist, songTitle] = respJSON.songtitle.split(' - ');
-        } catch(e) {
-            songTitle = respJSON.songtitle;
-            songArtist = "Unknown";
-        }
-        let currentStat = {
-            songartist: songArtist,
-            songtitle: songTitle,
-            currentlisteners: respJSON.currentlisteners,
-            peaklisteners: respJSON.peaklisteners,
-            maxlisteners: respJSON.maxlisteners,
-            uniquelisteners: respJSON.uniquelisteners,
-            averagetime: respJSON.averagetime
-        }
-        
-        let timeInfo = new Date()
-        const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
-        const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
-        currentStat.time = time;
-        currentStat.date = date;
-        if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
-
-        if(window && window.webContents)
-            try {
-                window.webContents.send('new_stat', currentStat);
-                if(!autoFetch || stat_count >= dont_handle_timeline_until || stat_count == 0) {
-                    window.webContents.send('new_stat_timeline', currentStat);
-                    stat_count = 0;
-                }
+            response = await fetch(url);
+            console.log("Fetching: Try " + stat_count)
+            if(response.ok) {
+                fetchSuccessful = true;
             }
-            catch (e) { console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message) }
+            else {
+                console.warn("Warning: promise resolved but something went wrong.");
+                fetchSuccessful = false;
+            }
+        } catch (e) {
+            console.warn("Warning: ", e.message)
+            fetchSuccessful = false;
+            if(window && window.webContents)
+                try { window.webContents.send('new_stat', {success: false}); }
+                catch (e) { windowObjectWarn(e); }
+        }
+        await sleep(1000);
     }
+
+    const windowObjectWarn = (e) => {
+        console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message);
+    }
+
+    // FETCH SUCCEEDED
+    stat_count++;
+
+    const respJSON = await response.json();
+    let songArtist, songTitle;
+    try {
+        [songArtist, songTitle] = respJSON.songtitle.split(' - ');
+    } catch(e) {
+        songTitle = respJSON.songtitle;
+        songArtist = "Unknown";
+    }
+    let currentStat = {
+        success: true,
+        songartist: songArtist,
+        songtitle: songTitle,
+        currentlisteners: respJSON.currentlisteners,
+        peaklisteners: respJSON.peaklisteners,
+        maxlisteners: respJSON.maxlisteners,
+        uniquelisteners: respJSON.uniquelisteners,
+        averagetime: respJSON.averagetime
+    }
+    
+    let timeInfo = new Date()
+    const time = `${('0' + timeInfo.getHours()).slice(-2)}:${('0' + timeInfo.getMinutes()).slice(-2)}:${('0' + timeInfo.getSeconds()).slice(-2)}`
+    const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
+    currentStat.time = time;
+    currentStat.date = date;
+    if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
+
+    if(window && window.webContents)
+        try {
+            window.webContents.send('new_stat', currentStat);
+            if(!autoFetch || stat_count >= dont_handle_timeline_until || stat_count == 0) {
+                window.webContents.send('new_stat_timeline', currentStat);
+                stat_count = 0;
+            }
+        }
+        catch (e) { windowObjectWarn(e); }
     //currentStat = timeInfo = response = null;
 }
 

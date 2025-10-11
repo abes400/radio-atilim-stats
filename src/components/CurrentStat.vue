@@ -87,7 +87,12 @@ export default {
 
     mounted() {
         window.ipc.on('new_stat', (new_stat) => {
-            this.stat = new_stat;
+            if(new_stat.success)
+                this.stat = new_stat;
+            else {
+                this.stat.songtitle = `Fetch failed - Retrying...`
+                this.stat.songartist = "Last fetch:"
+            }
         })
     },
 
