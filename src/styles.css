@@ -137,7 +137,7 @@ button:disabled { filter: opacity(30%); }
     box-shadow: none;
 }
 
-.drawer-button:active{ box-shadow: none; }
+.drawer-button:active{ box-shadow: none !important; }
 
 .drawer {
     width: calc(100% - 15px);
