@@ -12,11 +12,14 @@ npm run build
 ```
 
 ### Compiles and packages the application as a standalone distributable, generating a dedicated installer depending on the platform desired.
-Ex: For macOS, it generates a <b>.dmg</b> file.
-
-For Windows, it generates an <b> Executable Installer (.exe)</b>.
+For macOS, to generate a <b>.dmg</b> file (Electron builder version should be <b>23.0.2</b>):
 ```
-npm run dist
+npm run dist-mac
+```
+
+For Windows, to generate an <b> Executable Installer (.exe)</b> file (Electron builder version should be <b>22.14.13</b>):
+```
+npm run dist-win
 ```
 
 ### Compiles Vue components for development
