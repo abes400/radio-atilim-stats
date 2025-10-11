@@ -28,6 +28,9 @@
                 {{ date ? date : 'Select a chart from the left.' }}
             </strong>
             <div class="pin-right">
+                <button  v-show="date" @click="closeChart();">
+                    Close
+                </button>
                 <button @click="toggleChartDataset(0)" 
                     :style="{'border-color': data.datasets[0].hidden ? '#00000000': '#3FB17F'}">
                     Current Listeners
@@ -110,6 +113,12 @@ export default {
             this.statCount = 0
         },
 
+        closeChart() {
+            this.clearChart();
+            this.renderTriggerKey = !this.renderTriggerKey;
+            this.date = null;
+        },
+
         toggleChartDataset(index) {
             this.data.datasets[index].hidden = !this.data.datasets[index].hidden;
             this.renderTriggerKey = !this.renderTriggerKey;
@@ -136,7 +145,7 @@ export default {
         deleteChart(index) {
             window.ipc.invoke('delete_chart', JSON.parse(JSON.stringify(this.files[index])))
                 .then((result) => {
-                    console.log(result)
+                    //console.log(result)
                     if(result.success)
                         console.log(this.files.splice(index, 1))
                 })

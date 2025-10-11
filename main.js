@@ -106,7 +106,6 @@ const fetchData = async () => {
     while(!fetchSuccessful){
         try {
             response = await fetch(url);
-            console.log("Fetching: Try " + stat_count)
             if(response.ok) {
                 fetchSuccessful = true;
             }
