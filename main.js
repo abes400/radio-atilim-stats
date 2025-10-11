@@ -212,7 +212,7 @@ app.whenReady().then(() => {
         applicationName: 'Radio Atılım Statistics Monitor',
         applicationVersion: version,
         version: version,
-        credits: 'Programming: Abes400',
+        credits: 'Programming: İ.K. Bilir (Abes400)',
         copyright: 'Made for Atılım University. \nDistributed under MIT License.',
         website: 'https://github.com/abes400',
     });
