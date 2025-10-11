@@ -95,8 +95,9 @@ ipcMain.handle('toggle_auto', () => {
 });
 
 const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
-
-
+const windowObjectWarn = (e) => {
+    console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message);
+}
 
 // At some point I'm going to have to re-implement this function.
 const fetchData = async () => {
@@ -106,25 +107,16 @@ const fetchData = async () => {
     while(!fetchSuccessful){
         try {
             response = await fetch(url);
-            if(response.ok) {
-                fetchSuccessful = true;
-            }
-            else {
-                console.warn("Warning: promise resolved but something went wrong.");
-                fetchSuccessful = false;
-            }
+            if(response.ok) { fetchSuccessful = true; }
+            else throw new Error("Promise resolved but probably something went wrong in the server side.");
         } catch (e) {
             console.warn("Warning: ", e.message)
             fetchSuccessful = false;
             if(window && window.webContents)
-                try { window.webContents.send('new_stat', {success: false}); }
-                catch (e) { windowObjectWarn(e); }
+            try { window.webContents.send('new_stat', {success: false}); }
+            catch (e) { windowObjectWarn(e); }
         }
         await sleep(1000);
-    }
-
-    const windowObjectWarn = (e) => {
-        console.warn("The window object might have been destroyed. It's no big deal but we wanted to warn you anyway.", e.message);
     }
 
     // FETCH SUCCEEDED
@@ -132,9 +124,8 @@ const fetchData = async () => {
 
     const respJSON = await response.json();
     let songArtist, songTitle;
-    try {
-        [songArtist, songTitle] = respJSON.songtitle.split(' - ');
-    } catch(e) {
+    try { [songArtist, songTitle] = respJSON.songtitle.split(' - '); }
+    catch(e) {
         songTitle = respJSON.songtitle;
         songArtist = "Unknown";
     }
@@ -154,7 +145,8 @@ const fetchData = async () => {
     const date = `${timeInfo.getFullYear()}/${('0' + (timeInfo.getMonth() + 1)).slice(-2)}/${('0' + timeInfo.getDate()).slice(-2)}`
     currentStat.time = time;
     currentStat.date = date;
-    if(!currentStat.songtitle) currentStat.songtitle = 'Unknown'
+    if(!currentStat.songartist) currentStat.songartist = 'Unknown';
+    if(!currentStat.songtitle) currentStat.songtitle = 'Unknown';
 
     if(window && window.webContents)
         try {

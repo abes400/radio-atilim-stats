@@ -23,14 +23,17 @@
         </div>
     </div>
     <div class="right-side pin-right">
-        <div class="card-title">
-            <strong class="pin-left" style="padding-left: 15px;">
-                {{ date ? date : 'Select a chart from the left.' }}
-            </strong>
-            <div class="pin-right">
-                <button  v-show="date" @click="closeChart();">
-                    Close
+        <div v-if="date" class="card-title">
+            <div class="pin-left">
+                <button
+                    style="margin-left: 15px;"
+                    v-tooltip.bottom="'Close chart'"
+                    @click="closeChart();">
+                    <font-awesome-icon icon="fa-solid fa-close"/>
                 </button>
+                <strong style="padding-left: 5px;">{{ date }}</strong>
+            </div>
+            <div class="pin-right">
                 <button @click="toggleChartDataset(0)" 
                     :style="{'border-color': data.datasets[0].hidden ? '#00000000': '#3FB17F'}">
                     Current Listeners
@@ -45,9 +48,13 @@
                 </button>
             </div> 
         </div>
+        <div v-else class="card-title">
+            <strong class="pin-left" style="padding-left: 15px;">
+                Select a chart from the left.
+            </strong>
+        </div>
 
         <div class="card-content" >
-
             <div class="timeline-container pop-in pin-right">
                 <chart :key="this.renderTriggerKey" :options="this.options" :data="this.data"/>
             </div>
