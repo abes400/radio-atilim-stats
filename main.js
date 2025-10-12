@@ -12,19 +12,44 @@ const listenurl = 'http://www.radioatilim.com';
 const filePath = path.join(os.homedir(), 'RD ATILIM STATS');
 const fetchIntervalMillisecond = 10000;
 const dont_handle_timeline_until = 6;
-
+const got_the_lock = app.requestSingleInstanceLock()
 const {version} = require('./package.json');
 
 // TODO: Check the EIO dialog and try to fix it accordingly
 // ! To reprodue, keep the program open overnight with recording disabled
 
-powerSaveBlocker.start('prevent-app-suspension'); // Prevent system to enter sleep mode
-Menu.setApplicationMenu(null); // Get rid of the application menu on both platforms
-
-
 let window = null;
 let autoFetch = true;
 let stat_count = -1;
+
+powerSaveBlocker.start('prevent-app-suspension'); // Prevent system to enter sleep mode
+Menu.setApplicationMenu(null); // Get rid of the application menu on both platforms
+
+// Preventing multiple instance on Windows
+if(!got_the_lock) {app.quit();}
+else {
+    app.on('second-instance', () => {
+        if(window) {
+            if(window.isMinimized()) window.restore();
+            window.focus();
+        }
+    });
+    app.whenReady().then(() => {
+        app.setAboutPanelOptions(
+            {
+            applicationName: 'Radio Atılım Statistics Monitor',
+            applicationVersion: version,
+            version: version,
+            credits: 'Programming: İ.K. Bilir (Abes400)',
+            copyright: 'Made for Atılım University. \nDistributed under MIT License.',
+            website: 'https://github.com/abes400',
+        });
+        createWindow();
+        fetchData();
+        setInterval(() => { if(autoFetch) fetchData() }, fetchIntervalMillisecond);
+    });
+
+}
 
 ipcMain.on('about', () => { app.showAboutPanel(); });
 
@@ -198,17 +223,3 @@ const createWindow = () => {
     window.webContents.on('did-finish-load', () => window.setTitle(winTitle));
 }
 
-app.whenReady().then(() => {
-    app.setAboutPanelOptions(
-        {
-        applicationName: 'Radio Atılım Statistics Monitor',
-        applicationVersion: version,
-        version: version,
-        credits: 'Programming: İ.K. Bilir (Abes400)',
-        copyright: 'Made for Atılım University. \nDistributed under MIT License.',
-        website: 'https://github.com/abes400',
-    });
-    createWindow();
-    fetchData();
-    setInterval(() => { if(autoFetch) fetchData() }, fetchIntervalMillisecond);
-});
