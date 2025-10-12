@@ -1,4 +1,10 @@
 # Radio Atılım Statistics Monitor
+A utility developed for <b>RADIO ATILIM</b> to show streaming statistics.
+## Features
+- Sleek <b>Neumorphic GUI</b> providing a professional look and feel
+- Statistics updated <b>real-time</b> and recorded on <b>timelines</b> (Max. 120 records per timeline)
+- A <b>timeline manager</b> which lists each timeline <b>chronologically</b> and allows you to <b>preview</b> them
+- Double-click on the <b>title of the songs</b> and listen them on [Radio Atılım's Website](radioatilim.com)
 
 ![Screenshot of GUI](./build/Example_GUI.png)
 ## Project setup
