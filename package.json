@@ -19,7 +19,7 @@
   },
   "build": {
     "appId": "radio-atilim-stat-monitor",
-    "productName": "Radio Atılım Stat Monitor",
+    "productName": "Radio Atılım Stats",
     "executableName": "Radio Atılım Stats",
     "dmg": {
       "title": "${productName} ${version}",
